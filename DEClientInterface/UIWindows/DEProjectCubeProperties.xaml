@@ -1,0 +1,691 @@
+﻿<Window x:Class="DEClientInterface.DEProjectCubeProperties"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DEClientInterface" 
+        xmlns:de_core_objects="clr-namespace:ExcavatorSharp.Objects;assembly=ExcavatorSharp" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+        xmlns:fa="http://schemas.fontawesome.io/icons/" 
+        xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf" 
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" Title="PROJECTNAME ? Settings" Height="800" Width="1024">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="55" />
+        </Grid.RowDefinitions>
+        <TabControl Name="TaskPropertiesTabControl" TabStripPlacement="Top" Margin="-1,0,-1,0" Grid.Row="0" SelectionChanged="TaskPropertiesTabControl_SelectionChanged">
+            <TabItem Name="TabItemCommonProperties">
+                <HeaderedContentControl.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="4,4,0,4" Source="/DEClientInterface;component/Media/folder.png" Width="40" />
+                        <StackPanel Margin="10,0,10,0" Orientation="Vertical">
+                            <TextBlock FontSize="20">Project common</TextBlock>
+                            <TextBlock FontSize="13">Data location and homepage</TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,5,5,5">
+                        <Image Source="/DEClientInterface;component/Media/doc.png" Margin="0,0,2,-2" Width="23" />
+                        <Label FontSize="20">Project name and directory</Label>
+                    </StackPanel>
+                    <Separator Margin="0,0,0,6" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="220" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Project name:</TextBlock>
+                        <TextBox Name="DETaskNameTextArea" Width="430" Grid.Row="0" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Best scraping project" FontSize="16" LostFocus="DETaskNameTextArea_LostFocus" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="220" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Project directory:</TextBlock>
+                        <Grid Width="435" Row="2" Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="31" />
+                                <ColumnDefinition Width="31" />
+                                <ColumnDefinition Width="32" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="DETaskOperatingDirectoryTextArea" IsReadOnly="True" Grid.Row="0" Grid.Column="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="D://MyProject" FontSize="16" />
+                            <Button Name="RollProjectDirectoryButton" Grid.Row="0" Grid.Column="1" Margin="-1,3,0,3" Style="{StaticResource HelpIconRectangle}" Click="RollProjectDirectoryButton_Click">
+                                <fa5:SvgAwesome Icon="Solid_Magic" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </Button>
+                            <Button Name="SelectProjectDirectoryButton" Grid.Row="0" Grid.Column="2" Margin="-1,3,0,3" Style="{StaticResource HelpIconRectangle}" Click="SelectProjectDirectoryButton_Click">
+                                <fa5:SvgAwesome Icon="Regular_Folder" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </Button>
+                            <Button Name="HelpButton_TaskDirectory" Grid.Row="0" Grid.Column="3" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_TaskDirectory_Click">
+                                <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,20,5,5">
+                        <Image Source="/DEClientInterface;component/Media/www.png" Margin="0,0,4,-2" Width="23" />
+                        <Label FontSize="20">Website targeting</Label>
+                    </StackPanel>
+                    <Separator Margin="0,0,0,6" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="220" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Website homepage URL:</TextBlock>
+                        <Grid Width="435" Row="2" Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="32" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="DEWebsiteRootUrlTextArea" Grid.Row="0" Grid.Column="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="https://sitename.com" FontSize="16" />
+                            <Button Name="WebsiteOpenHomeURLButton" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="WebsiteOpenHomeURLButton_Click">
+                                <fa5:SvgAwesome Icon="Solid_Globe" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="220" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Page to scrape example URL:</TextBlock>
+                        <Grid Width="435" Row="2" Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="32" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="DEWebsitePageToScrapeExample" Grid.Row="0" Grid.Column="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="https://sitename.com/product/abc" FontSize="16" />
+                            <Button Name="WebsiteOpenPageToScrapeURLButton" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="WebsiteOpenPageToScrapeURLButton_Click">
+                                <fa5:SvgAwesome Icon="Solid_Globe" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Name="TabItemGrabberPatterns">
+                <HeaderedContentControl.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="4,4,0,4" Source="/DEClientInterface;component/Media/detective_dog.png" Width="40" />
+                        <StackPanel Margin="5,0,10,0" Orientation="Vertical">
+                            <TextBlock Name="DataToScrapeTabHeadingTextBox" FontSize="20">Elements to scrape</TextBlock>
+                            <TextBlock FontSize="13">Pick elements on the page</TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400" />
+                        <ColumnDefinition Width="3" />
+                        <ColumnDefinition Width="600*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                            <Image Source="/DEClientInterface;component/Media/checkbox.png" Margin="0,0,8,0" Width="24" />
+                            <TextBlock Grid.Row="0" FontSize="20">Elements to scrape:</TextBlock>
+                        </StackPanel>
+                        <Separator Grid.Row="1" Grid.ColumnSpan="2" />
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
+                            <Button Name="AddNodeToScrapeButton" FontSize="16" Padding="15,0" Margin="6,5" Click="AddNodeToScrapeButton_Click">? Add element</Button>
+                        </StackPanel>
+                        <ScrollViewer Name="ParsingElementsScrollViewer" Grid.Row="2" Grid.ColumnSpan="2" Margin="4,5,4,1">
+                            <StackPanel Name="ParsingElementsScrollViewerContentPanel" Orientation="Vertical" />
+                        </ScrollViewer>
+                    </Grid>
+                    <Grid Column="1" Margin="0,-2,0,-2" Background="#cccccc" />
+                    <Grid Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="38" />
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <Grid Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="110" />
+                                <ColumnDefinition Width="150" />
+                            </Grid.ColumnDefinitions>
+                            <Label FontSize="20" HorizontalAlignment="Center">Page URL:</Label>
+                            <TextBox Name="PICKNODES_PageUrlTextBlock" Style="{StaticResource TextBoxWithPlaceholderWrappedText}" Grid.Column="1" Tag="product/, offer/" Margin="0,4,6,3" FontSize="16" />
+                            <Button Name="PICKNODES_NavigateButton" Grid.Column="2" Margin="1,4,4,3" FontSize="16" Click="PICKNODES_NavigateButton_Click">Navigate</Button>
+                            <Button Name="PICKNODES_ReloadCSSSelectorsButton" Grid.Column="3" Margin="1,4,4,3" FontSize="16" Click="PICKNODES_ReloadCSSSelectorsButton_Click">Reload elements</Button>
+                        </Grid>
+                        <Separator Grid.Row="1" />
+                        <ScrollViewer Name="RenderedPageScrollViewer" Grid.Row="2" HorizontalScrollBarVisibility="Visible">
+                            <wpf:ChromiumWebBrowser Name="ProjectSettingsPage_PickNodesWebBrowser" />
+                        </ScrollViewer>
+                        <Grid Name="BrowserLoadingGridOverlay" Row="0" RowSpan="3" Visibility="Collapsed" Background="#ebf3ff" Opacity=".8" Margin="0,-2,-2,-2">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <fa5:SvgAwesome Icon="Solid_Spinner" Spin="True" Width="60" Height="60" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <TextBlock Margin="0,10" FontSize="28">Loading...</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <Grid Name="NodePickerOverlay" Column="2" Visibility="Visible">
+                        <Grid Name="NodePickerBlueOverlayBase" Margin="0,-2,-2,-2" Background="#ebf3ff" Opacity=".9" />
+                        <Grid Name="NodePicker_LoadPageToPickNodes" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
+                            <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                                <Image Source="/DEClientInterface;component/Media/website.png" Width="128" />
+                                <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="0,5,0,5">Open example page to pick elements</Label>
+                                <TextBlock HorizontalAlignment="Center" FontSize="16" Width="400" TextWrapping="Wrap">Navigate to the page from which you want to extract data. For example, if you want to scrape product data - go to the example product page.</TextBlock>
+                                <TextBox Name="ExamplePageOverlayStartModalTextBox" Style="{StaticResource TextBoxWithPlaceholderWrappedText}" FontSize="16" Tag="https://mysite.com/products/iphone11" Margin="0,20,0,0" Width="400" KeyDown="ExamplePageOverlayStartModalTextBox_KeyDown" />
+                                <Button Name="NavigateSamplePageStartButton" HorizontalAlignment="Center" Padding="15,5" FontSize="16" Margin="0,20,0,0" Click="NavigateSamplePageStartButton_Click">Navigate to the page</Button>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Name="NodePicker_ReloadPageToUpdateNodes" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+                            <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                                <Image Source="/DEClientInterface;component/Media/refresh.png" Width="128" />
+                                <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="0,10,0,15">Reload page to update nodes</Label>
+                                <TextBlock HorizontalAlignment="Center" FontSize="16" Width="430" TextWrapping="Wrap">The CSS selector has been changed from the common list. To view the selectors interactively, please reload the page.</TextBlock>
+                                <Button Name="NavigateSamplePageReloadPageButton" HorizontalAlignment="Center" Padding="15,5" FontSize="16" Margin="0,20,0,0" Click="NavigateSamplePageReloadPageButton_Click">Reload page</Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Name="TabItemCrawlerProperties">
+                <HeaderedContentControl.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="4,4,0,4" Source="/DEClientInterface;component/Media/settings.png" Width="40" />
+                        <StackPanel Margin="10,0,10,0" Orientation="Vertical">
+                            <TextBlock FontSize="20">Robot settings</TextBlock>
+                            <TextBlock FontSize="13">Speed, behavior and and URLs</TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </HeaderedContentControl.Header>
+                <ScrollViewer Padding="0,0,2,0" CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,5,5,5">
+                            <Image Source="/DEClientInterface;component/Media/rocket2.png" Margin="0,0,4,-2" Width="20" />
+                            <Label FontSize="20">Robot speed</Label>
+                        </StackPanel>
+                        <Separator />
+                        <StackPanel HorizontalAlignment="Left" Orientation="Vertical" Width="655">
+                            <Slider Name="ApplicationSpeedBar" HorizontalAlignment="Center" Margin="0,30,0,10" Width="535" Maximum="12" TickPlacement="BottomRight" TickFrequency="3" IsSnapToTickEnabled="True" Height="30" />
+                            <Grid Width="655">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20*" />
+                                    <ColumnDefinition Width="20*" />
+                                    <ColumnDefinition Width="20*" />
+                                    <ColumnDefinition Width="20*" />
+                                    <ColumnDefinition Width="20*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Column="0" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,5,0,0">
+                                        <Ellipse Fill="#FF7EFFED" Width="30" Height="30" />
+                                        <Label HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,5,0,-5">Minimum</Label>
+                                        <Label HorizontalAlignment="Center">1 Thread</Label>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Column="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,5,0,0">
+                                        <Ellipse Fill="#FF9BDBFF" Width="30" Height="30" />
+                                        <Label HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,5,0,-5">Economical</Label>
+                                        <Label HorizontalAlignment="Center">3 Threads</Label>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Column="2" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,5,0,0">
+                                        <Ellipse Fill="#FF11D43E" Width="30" Height="30" />
+                                        <Label HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,5,0,-5">Medium</Label>
+                                        <Label HorizontalAlignment="Center">6 Threads</Label>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Column="3" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,5,0,0">
+                                        <Ellipse Fill="#FFEA8520" Width="30" Height="30" />
+                                        <Label HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,5,0,-5">Fast</Label>
+                                        <Label HorizontalAlignment="Center">9 Threads</Label>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Column="4" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,5,0,0">
+                                        <Ellipse Fill="#FFFF0000" Width="30" Height="30" />
+                                        <Label HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,5,0,-5">Maximum</Label>
+                                        <Label HorizontalAlignment="Center">12 Threads</Label>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Crawlers count:</TextBlock>
+                            <Grid Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DETaskCrawlingServerCrawlingThreadsCountTextArea" Width="400" Grid.Column="0" Grid.Row="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="2" FontSize="16" />
+                                <Button Name="HelpButton_CrawlingThreadsCount" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_CrawlingThreadsCount_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,20,5,5">
+                            <Image Source="/DEClientInterface;component/Media/download.png" Margin="0,0,0,-2" Width="28" />
+                            <Label FontSize="20">What website pages should be scanned?</Label>
+                        </StackPanel>
+                        <Separator Margin="0,0,0,6" />
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Width="220" Orientation="Vertical" Grid.Row="2">
+                                <TextBlock VerticalAlignment="Top" Padding="10,7,0,0" FontSize="16">Pages to scan, URL mask(s):</TextBlock>
+                                <TextBlock VerticalAlignment="Top" Padding="10,7,7,0" FontSize="12" TextWrapping="Wrap">Specify URL substrings with comma. The website pages with these substrings will be processed.</TextBlock>
+                                <TextBlock VerticalAlignment="Top" Padding="10,7,7,0" FontSize="12" TextWrapping="Wrap">* - scan all pages on the website</TextBlock>
+                            </StackPanel>
+                            <TextBox Name="DETaskCrawlingServerRespectOnlySpecifiedUrlsTextArea" Width="430" Height="110" Grid.Row="2" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholderWrappedText}" Tag="product/, offer/" TextWrapping="Wrap" FontSize="16" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Width="220" Orientation="Vertical" Grid.Row="3">
+                                <TextBlock VerticalAlignment="Top" Padding="10,7,0,0" FontSize="16">Pages to skip, URL mask(s):</TextBlock>
+                                <TextBlock VerticalAlignment="Top" Padding="10,7,7,0" FontSize="12" TextWrapping="Wrap">Specify URL substrings with comma. The website pages with these substrings will be skipped.</TextBlock>
+                            </StackPanel>
+                            <TextBox Name="DETaskCrawlingServerUrlSubstringsRestrictionsTextArea" Width="430" Height="110" Grid.Row="3" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholderWrappedText}" Tag="tray, checkout, .js, .css" TextWrapping="Wrap" FontSize="16" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Scan all website:</TextBlock>
+                            <ComboBox Name="DETaskCrawlingServerCrawlWebsiteLinksSelectBox" Width="430" Grid.Row="4" Grid.Column="1" Margin="3" FontSize="16">
+                                <ComboBoxItem Tag="true">Yes, follow all website links and scrape all found pages</ComboBoxItem>
+                                <ComboBoxItem Tag="false">No, don't follow website links. Scrape only links added manually myself.</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,20,5,5">
+                            <Image Source="/DEClientInterface;component/Media/cube.png" Margin="0,0,4,-2" Width="20" />
+                            <Label FontSize="20">What website pages should be scraped?</Label>
+                        </StackPanel>
+                        <Separator Margin="0,0,0,6" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Pages to scrape, URL mask:</TextBlock>
+                            <Grid Width="435" Row="1" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DEPatternAllowedPageUrlsSubstringsTextArea" Grid.Row="0" Grid.Column="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="URL substring, like: product/" FontSize="16" />
+                                <Button Name="HelpButton_PatternPagesUrlsSubstrings" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_PatternPagesUrlsSubstrings_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Pages to scrape, HTML mask:</TextBlock>
+                            <Grid Width="435" Row="2" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DEPatternAllowedPageHTMLSubstringsTextArea" Grid.Row="0" Grid.Column="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="HTML substring, like: h1" FontSize="16" />
+                                <Button Name="HelpButton_PatternPagesHTMLSubstrings" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_PatternPagesHTMLSubstrings_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,20,5,5">
+                            <Image Source="/DEClientInterface;component/Media/js.png" Margin="0,0,4,-2" Width="20" />
+                            <Label FontSize="20">Dynamic content processing</Label>
+                        </StackPanel>
+                        <Separator Margin="0,0,0,6" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Login to the website:</TextBlock>
+                            <Grid Width="435" Row="8" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="31" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Name="DETaskCrawlingServer_CEFAuthenticationBehavior_TextBlock" Margin="3,3,0,3" Padding="7,3" Background="#e5e5e5" FontSize="16" />
+                                <Button Name="EditButton_CEFAuthenticationBehavior" Grid.Row="0" Grid.Column="1" Margin="0,3,0,3" Style="{StaticResource HelpIconRectangle}" Click="EditButton_CEFAuthenticationBehavior_Click">
+                                    <fa5:SvgAwesome Icon="Solid_PencilAlt" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                                <Button Name="HelpButton_CEFAuthenticationBehavior" Grid.Row="0" Grid.Column="2" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_CEFAuthenticationBehavior_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Execute JS on the website:</TextBlock>
+                            <Grid Width="435" Row="9" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="31" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Name="DETaskCrawlingServer_CEFCrawlingBehaviors_TextBlock" Margin="3,3,0,3" Padding="7,3" Background="#e5e5e5" FontSize="16" />
+                                <Button Name="EditButton_CEFCrawlingBehaviors" Grid.Row="0" Grid.Column="1" Margin="0,3,0,3" Style="{StaticResource HelpIconRectangle}" Click="EditButton_CEFCrawlingBehaviors_Click">
+                                    <fa5:SvgAwesome Icon="Solid_PencilAlt" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                                <Button Name="HelpButton_CEFCrawlingBehaviors" Grid.Row="0" Grid.Column="2" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_CEFCrawlingBehaviors_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">CAPTCHA bypassing:</TextBlock>
+                            <Grid Width="435" Row="10" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="31" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Name="DETaskCrawlingServer_CEFCaptchaBehavior_TextBlock" Margin="3,3,0,3" Padding="7,3" Background="#e5e5e5" FontSize="16" />
+                                <Button Name="EditButton_CEFCAPTCHABehavior" Grid.Row="0" Grid.Column="1" Margin="0,3,0,3" Style="{StaticResource HelpIconRectangle}" Click="EditButton_CEFCAPTCHABehavior_Click">
+                                    <fa5:SvgAwesome Icon="Solid_PencilAlt" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                                <Button Name="HelpButton_CEFCAPTCHABehavior" Grid.Row="0" Grid.Column="2" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_CEFCAPTCHABehavior_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="30" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Extract data from iFrames:</TextBlock>
+                            <Grid Width="435" Row="30" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Name="DETaskCrawlingServerExpandIFramesSelectBox" Grid.Row="0" Grid.Column="0" Margin="3,3,0,3" FontSize="16">
+                                    <ComboBoxItem Tag="true">Yes</ComboBoxItem>
+                                    <ComboBoxItem Tag="false">No</ComboBoxItem>
+                                </ComboBox>
+                                <Button Name="HelpButton_ExpandIFrames" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_ExpandIFrames_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,5,5,5">
+                            <Image Source="/DEClientInterface;component/Media/shield.png" Margin="0,0,4,-2" Width="24" />
+                            <Label FontSize="20">Proxies</Label>
+                        </StackPanel>
+                        <Separator Margin="0,0,0,6" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Proxy addresses:</TextBlock>
+                            <Grid Width="435" Row="11" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="31" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Name="DETaskCrawlingServer_HTTPWebRequestProxiesList_TextBlock" Margin="3,3,0,3" Padding="7,3" Background="#e5e5e5" FontSize="16" />
+                                <Button Name="EditButton_HTTPWebRequestProxiesList" Grid.Row="0" Grid.Column="1" Margin="0,3,0,3" Style="{StaticResource HelpIconRectangle}" Click="EditButton_HTTPWebRequestProxiesList_Click">
+                                    <fa5:SvgAwesome Icon="Solid_PencilAlt" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                                <Button Name="HelpButton_HTTPWebRequestProxiesList" Grid.Row="0" Grid.Column="2" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_HTTPWebRequestProxiesList_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="12" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Proxies rotation:</TextBlock>
+                            <Grid Width="435" Row="12" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Name="DETaskCrawlingServerProxiesRotationSelectBox" Grid.Row="0" Grid.Column="0" Margin="3,3,0,3" FontSize="16" ItemsSource="{Binding Source={local:EnumToItemsSource {x:Type de_core_objects:ProxiesRotationType}}}" />
+                                <Button Name="HelpButton_ProxiesRotation" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_ProxiesRotation_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="16" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Sitemap URL:</TextBlock>
+                            <TextBox Name="DETaskCrawlingServerSitemapUrlTextArea" Width="430" Grid.Row="16" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="URL to sitemap file of website" FontSize="16" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,5,5,5">
+                            <Image Source="/DEClientInterface;component/Media/speed-limit.png" Margin="0,0,3,-2" Width="24" />
+                            <Label FontSize="20">Limits</Label>
+                        </StackPanel>
+                        <Separator Margin="0,0,0,6" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="20" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Pages to scan limit:</TextBlock>
+                            <Grid Width="435" Row="20" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DETaskCrawlingServerPagesToCrawlLimitTextArea" Grid.Column="0" Grid.Row="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Total number of scanned pages to stop the task" FontSize="16" />
+                                <Button Name="HelpButton_PagesToCrawlLimit" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_PagesToCrawlLimit_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="21" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Scan timeout, ms:</TextBlock>
+                            <Grid Width="435" Row="21" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DETaskCrawlingServerPageDownloadTimeoutMillisecondsTextArea" Grid.Column="0" Grid.Row="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Timeout of each scanning attempt" FontSize="16" />
+                                <Button Name="HelpButton_PageDownloadTimeoutMilliseconds" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_PageDownloadTimeoutMilliseconds_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,5,5,5">
+                            <Image Source="/DEClientInterface;component/Media/ai.png" Margin="0,0,3,-2" Width="24" />
+                            <Label FontSize="20">Presentation of the robot</Label>
+                        </StackPanel>
+                        <Separator Margin="0,0,0,6" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="18" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Robot User-Agent:</TextBlock>
+                            <TextBox Name="DETaskCrawlingServerCrawlerUserAgentTextArea" Width="430" Grid.Row="18" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="User-Agent to be used for website scanning" FontSize="16" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="19" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Website download method:</TextBlock>
+                            <ComboBox Name="DETaskCrawlingServerHttpWebRequestMethodSelectBox" Width="430" Grid.Row="19" Grid.Column="1" Margin="3" FontSize="15">
+                                <ComboBoxItem Tag="GET">GET</ComboBoxItem>
+                                <ComboBoxItem Tag="POST">POST</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="29" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">URL arguments:</TextBlock>
+                            <Grid Width="435" Row="29" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="31" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Name="DETaskCrawlingServer_CrawlingArguments_TextBlock" Margin="3,3,0,3" Padding="7,3" Background="#e5e5e5" FontSize="16" />
+                                <Button Name="EditButton_CrawlingArguments" Grid.Row="0" Grid.Column="1" Margin="0,3" Style="{StaticResource HelpIconRectangle}" Click="EditButton_CrawlingArguments_Click">
+                                    <fa5:SvgAwesome Icon="Solid_PencilAlt" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                                <Button Name="HelpButton_CrawlingArguments" Grid.Row="0" Grid.Column="2" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_CrawlingArguments_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,5,5,5">
+                            <Image Source="/DEClientInterface;component/Media/power-plug.png" Margin="0,0,2,-2" Width="26" />
+                            <Label FontSize="20">Online data exporting</Label>
+                        </StackPanel>
+                        <Separator Margin="0,0,0,6" />
+                        <TextBlock HorizontalAlignment="Left" Width="655" Padding="10,5,0,5" FontSize="14" TextWrapping="Wrap">Please use this setting only if you need to export data on-the-fly. This setting requires software fine-tuning on the receiving site side. If you just want to scrape the data and then export it to Excel, you do not need to use this function.</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Export data online:</TextBlock>
+                            <ComboBox Name="DETaskGrabbingServerExportDataOnlineSelectBox" Width="430" Grid.Column="1" Grid.Row="4" Margin="3" FontSize="16">
+                                <ComboBoxItem Tag="true">Export scraping results on-the-fly via a specified http(s) link</ComboBoxItem>
+                                <ComboBoxItem Tag="false">Don't export scraping results on-the-fly</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Column="0" Grid.Row="5" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Export http(s)-link:</TextBlock>
+                            <TextBox Name="DETaskGrabbingServerGrabbingThreadExportDataOnlineHTTPLinkTextArea" Width="430" Grid.Column="1" Grid.Row="5" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="HTTP(S)-link to export data on-the-fly" FontSize="16" />
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="22" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Scan attempts, n:</TextBlock>
+                            <Grid Width="435" Row="22" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DETaskCrawlingServerPageDownloadAttemptsTextArea" Grid.Column="0" Grid.Row="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Total scanning attemps for each page" FontSize="16" />
+                                <Button Name="HelpButtonPageDownloadAttempts" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButtonPageDownloadAttempts_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Crawler delay, ms:</TextBlock>
+                            <Grid Row="7" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DETaskCrawlingServerCrawlingThreadDelayMillisecondsTextArea" Width="400" Grid.Column="0" Grid.Row="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Time of thread iddling after each crawl operation" FontSize="16" />
+                                <Button Name="HelpButton_CrawlingThreadDelayMilliseconds" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_CrawlingThreadDelayMilliseconds_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Crawler engine:</TextBlock>
+                            <Grid Row="6" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Name="DETaskCrawlingServerPrimaryDataCrawlingWaySelectBox" Width="400" Grid.Row="0" Grid.Column="0" Margin="3,3,0,3" FontSize="16" ItemsSource="{Binding Source={local:EnumToItemsSource {x:Type de_core_objects:DataCrawlingType}}}" SelectionChanged="DETaskCrawlingServerPrimaryDataCrawlingWaySelectBox_SelectionChanged" />
+                                <Button Name="HelpButton_PrimaryCrawlingWay" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_PrimaryCrawlingWay_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="13" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Respect robots.txt:</TextBlock>
+                            <ComboBox Name="DETaskCrawlingServerRespectRobotsTxtFileSelectBox" Width="400" Grid.Row="13" Grid.Column="1" Margin="3" FontSize="16">
+                                <ComboBoxItem Tag="true">Yes</ComboBoxItem>
+                                <ComboBoxItem IsSelected="True" Tag="false">No</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="14" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Robots U-A chain:</TextBlock>
+                            <Grid Width="400" Row="14" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DETaskCrawlingServerRobotsTxtUserAgentRespectationChainTextArea" Grid.Column="0" Grid.Row="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="User-agents chain for robots.txt analysing" FontSize="16" />
+                                <Button Name="HelpButton_RobotsTxtUserAgentRespectationChain" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_RobotsTxtUserAgentRespectationChain_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Robots reindex days:</TextBlock>
+                            <TextBox Name="DETaskCrawlingServerRobotsTxtReindexTimeDaysTextArea" Width="400" Grid.Row="15" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Reanalyse robots.txt after N days" FontSize="16" />
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="17" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Sitemap reindex days:</TextBlock>
+                            <TextBox Name="DETaskCrawlingServerSitemapReindexTimeDaysTextArea" Width="400" Grid.Row="17" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Reanalyse sitemap after N days" FontSize="16" />
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="28" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Parallelism degree:</TextBlock>
+                            <Grid Width="400" Row="28" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DETaskCrawlingServerConcurrentCollectionsParallelismQuantityTextArea" Grid.Column="0" Grid.Row="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="The degree of parallelism used in link analysis" FontSize="16" />
+                                <Button Name="HelpButton_ConcurrentCollectionsParallelismQuantity" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_ConcurrentCollectionsParallelismQuantity_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="27" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">L-buffer flushing, ms:</TextBlock>
+                            <Grid Width="400" Row="27" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DETaskCrawlingServerLinksBufferHDDAutoSavingMillisecondsTextArea" Grid.Column="0" Grid.Row="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Links buffer flushing delay" FontSize="16" />
+                                <Button Name="HelpButton_LinksBufferHDDAutoSavingMilliseconds" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_LinksBufferHDDAutoSavingMilliseconds_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="25" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Re-crawl pages:</TextBlock>
+                            <ComboBox Name="DETaskCrawlingServerSReindexCrawledPagesSourceSelectBox" Width="400" Grid.Row="25" Grid.Column="1" Margin="3" FontSize="16">
+                                <ComboBoxItem Tag="true">Yes</ComboBoxItem>
+                                <ComboBoxItem Tag="false">No</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="26" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Recrawl after N mins:</TextBlock>
+                            <TextBox Name="DETaskCrawlingServerReindexCrawledPagesAfterSpecifiedMinutesIntervalTextArea" Width="400" Grid.Row="26" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Make indexed pages recrawling after N minutes" FontSize="16" />
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="23" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Store crawled data:</TextBlock>
+                            <ComboBox Name="DETaskCrawlingServerStoreCrawledDataSelectBox" Width="430" Grid.Row="23" Grid.Column="1" Margin="3" FontSize="16">
+                                <ComboBoxItem IsSelected="True" Tag="true">Yes</ComboBoxItem>
+                                <ComboBoxItem Tag="false">No</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Row="24" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Store pages sources:</TextBlock>
+                            <ComboBox Name="DETaskCrawlingServerStoreCrawledPagesHTMLSourceSelectBox" Width="430" Grid.Row="24" Grid.Column="1" Margin="3" FontSize="16">
+                                <ComboBoxItem Tag="true">Yes</ComboBoxItem>
+                                <ComboBoxItem IsSelected="False" Tag="false">No</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Scrapers count:</TextBlock>
+                            <Grid Width="435" Row="0" Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="32" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="DETaskGrabbingServerGrabbingThreadsCountTextArea" Text="3" Grid.Column="0" Grid.Row="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="2" FontSize="16" />
+                                <Button Name="HelpButton_GrabbingThreadsCount" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="HelpButton_GrabbingThreadsCount_Click">
+                                    <fa5:SvgAwesome Icon="Regular_QuestionCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Scraper delay ms:</TextBlock>
+                            <TextBox Name="DETaskGrabbingServerGrabbingThreadDelayMillisecondsTextArea" Width="430" Text="5000" Grid.Column="1" Grid.Row="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Time of thread iddling after each scrape operation | 5000" FontSize="16" />
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Save scraped data:</TextBlock>
+                            <ComboBox Name="DETaskGrabbingServerStoreGrabbedDataSelectBox" Width="430" Grid.Column="1" Grid.Row="2" Margin="3" FontSize="16">
+                                <ComboBoxItem Tag="true">Save scraped data on my HDD</ComboBoxItem>
+                                <ComboBoxItem Tag="false">Don't save scraped data on my HDD</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Visibility="Collapsed" Orientation="Horizontal">
+                            <TextBlock Width="220" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Only non-empty data:</TextBlock>
+                            <ComboBox Name="DETaskGrabbingServerStoreOnlyNonEmptyDataSelectBox" Width="430" Grid.Column="1" Grid.Row="3" Margin="3" FontSize="16">
+                                <ComboBoxItem Tag="true">Save only non-empty results</ComboBoxItem>
+                                <ComboBoxItem Tag="false">Save all scraping results, including empty results</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+        <Grid Row="1" Background="#ebf3ff">
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left" Margin="10">
+                <Button Name="TestProjectSettingsButton" Padding="15,0" Margin="0,0,0,0" Click="TestProjectSettingsButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <fa5:SvgAwesome Icon="Solid_Wrench" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" />
+                        <TextBlock Margin="7,0,0,0" FontSize="16">Test</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="DropSettingToDetaultsButton" Padding="15,0" Margin="10,0,0,0" Click="DropSettingToDetaultsButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="16">Set to defaults</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="ImportSettingButton" Padding="15,0" Margin="10,0,0,0" Click="ImportSettingButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="16">Import</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="ExportSettingButton" Padding="15,0" Margin="10,0,0,0" Click="ExportSettingButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="16">Export</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="SaveProjectPropertiesButton" Padding="15,0" Margin="10,0,0,0" Click="SaveProjectPropertiesButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <fa5:SvgAwesome Icon="Regular_Save" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" />
+                        <TextBlock FontSize="16" VerticalAlignment="Center" Margin="7,0,0,0">Save</TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Border Name="ProjectPropertiesShadowOverlay" Grid.RowSpan="2" Background="#cccccc" Visibility="Hidden" Style="{StaticResource VisibleAnimation}" />
+    </Grid>
+</Window>

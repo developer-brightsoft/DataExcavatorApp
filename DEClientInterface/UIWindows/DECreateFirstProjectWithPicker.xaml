@@ -1,0 +1,44 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DECreateFirstProjectWithPicker"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+        xmlns:de_core_objects="clr-namespace:ExcavatorSharp.Objects;assembly=ExcavatorSharp" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+        xmlns:fa="http://schemas.fontawesome.io/icons/" 
+        xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf" 
+        xmlns:uicontrols="clr-namespace:DEClientInterface.UIControls" 
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" Title="Create express project" Height="600" Width="800">
+    <Grid>
+        <Grid Name="BrowserContainerGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="6" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+            <ScrollViewer Name="RenderedPageScrollViewer" Grid.Row="0" HorizontalScrollBarVisibility="Visible">
+                <wpf:ChromiumWebBrowser Name="ProjectSettingsPage_PickNodesWebBrowser" />
+            </ScrollViewer>
+            <Separator Grid.Row="1" />
+            <Grid Row="2" Background="#FFDAE9FF">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Name="CreateProjectFromExpressWindow" Padding="15,4" FontWeight="Bold" FontSize="20" Click="CreateProjectFromExpressWindow_Click">Create project!</Button>
+                </StackPanel>
+            </Grid>
+            <StackPanel Name="PickedElementsStackEmulator" Visibility="Collapsed" />
+        </Grid>
+        <Grid Name="CompletePageAddressToStartGrid" Background="#FFFFFFFF">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                    <Image Source="/DEClientInterface;component/Media/website.png" Width="128" />
+                    <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="0,5,0,5">Just open page you want to scrape</Label>
+                    <TextBlock HorizontalAlignment="Center" FontSize="16" Width="400" TextWrapping="Wrap">Navigate to the page you want to scrape. If you want to scrape product data - go to the example product page.</TextBlock>
+                    <TextBox Name="ExamplePageOverlayStartModalTextBox" Style="{StaticResource TextBoxWithPlaceholderWrappedText}" FontSize="16" Tag="https://mysite.com/products/iphone11" Margin="0,20,0,0" Width="400" KeyDown="ExamplePageOverlayStartModalTextBox_KeyDown" />
+                    <Button Name="NavigateSamplePageStartButton" HorizontalAlignment="Center" Padding="15,5" FontSize="16" Margin="0,20,0,0" Click="NavigateSamplePageStartButton_Click">Navigate to the page</Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <uicontrols:DEWaitLoader x:Name="WaitLoaderOverlay" Width="Auto" Height="Auto" Grid.RowSpan="2" Visibility="Hidden" />
+    </Grid>
+</Window>

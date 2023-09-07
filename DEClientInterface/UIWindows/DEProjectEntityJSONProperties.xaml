@@ -1,0 +1,42 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DEProjectEntityJSONProperties"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:DEClientInterface" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+        xmlns:fa="http://schemas.fontawesome.io/icons/" 
+        ResizeMode="NoResize" Title="Edit JSON-based property" Height="600" Width="450" 
+        xmlns:uiwindows="clr-namespace:DEClientInterface.UIWindows">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="7" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="7" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <TextBox Name="ExampleTextBox" Margin="5,5,5,3" IsReadOnly="True" Grid.Row="0" TextWrapping="Wrap" AcceptsReturn="True" Background="#f7f7f7" Padding="5" />
+        <Separator Grid.Row="1" />
+        <Button Name="CopyJSONSettingsButton" Grid.Row="2" HorizontalAlignment="Center" Padding="20,0" Margin="0,4" FontSize="16" Click="CopyJSONSettingsButton_Click">? Copy ?</Button>
+        <Separator Grid.Row="3" />
+        <RichTextBox Name="PropertiesTextBox" Margin="5,3,5,5" Grid.Row="4" Padding="5" AcceptsReturn="True">
+            <FrameworkElement.Resources>
+                <ResourceDictionary>
+                    <Style x:Key="{x:Type Paragraph}" TargetType="{x:Type Paragraph}">
+                        <Setter Property="Block.Margin" Value="0,3,0,3" />
+                    </Style>
+                </ResourceDictionary>
+            </FrameworkElement.Resources>
+        </RichTextBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5" Margin="5,0,5,5">
+            <Button Name="ApplyJSONSettingsSet" Grid.Row="3" Padding="15,0" Click="ApplyJSONSettingsSet_Click">
+                <StackPanel Orientation="Horizontal">
+                    <fa5:SvgAwesome Icon="Regular_CheckCircle" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" />
+                    <TextBlock VerticalAlignment="Center" Margin="7,0,0,0" FontSize="16">Apply</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

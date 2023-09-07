@@ -1,0 +1,38 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DECreateFirstProject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+        xmlns:uicontrols="clr-namespace:DEClientInterface.UIControls" 
+        ResizeMode="CanMinimize" Title="Create express project" Height="655" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="155" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Margin="0,15,0,0">
+            <TextBlock Foreground="#146391" FontWeight="Bold" TextAlignment="Center" FontSize="18">?? Hi! I will help you to create your express project. ??</TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="18">Don't worry! It's easier than it looks.</TextBlock>
+            <Separator Margin="0,15,0,0" />
+            <TextBlock FontStyle="Italic" Margin="20,10,20,0" TextWrapping="Wrap" TextAlignment="Center" FontSize="18">Minimum knowledge to use the application: .CSS selectors, ability to work with the console in Google Chrome. Let's begin!</TextBlock>
+            <Separator Margin="0,15,0,0" />
+        </StackPanel>
+        <Grid Row="1" Background="#ebf3ff">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Margin="10,10,10,0" TextAlignment="Center" FontSize="18">1. Enter URL of page you want to parse:</TextBlock>
+                <TextBox Name="WebsiteUrl" Width="300" Margin="0,10,0,0" FontSize="24" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Some URL to scrape" KeyDown="WebsiteUrl_KeyDown" />
+                <TextBlock Margin="10,10,10,0" TextAlignment="Center" FontSize="18" TextWrapping="Wrap">2. Add .css selectors for the elements you want to extract<LineBreak />— or click on "Auto-detect" button:</TextBlock>
+                <TextBox Name="CSSSelector1" Width="300" Margin="0,10,0,0" FontSize="24" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Some CSS selector #1" />
+                <TextBox Name="CSSSelector2" Width="300" Margin="0,10,0,0" FontSize="24" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Some CSS selector #2" />
+                <TextBox Name="CSSSelector3" Width="300" Margin="0,10,0,0" FontSize="24" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Some CSS selector #3" />
+                <Button Name="AutoDetectCSSSelectors" FontSize="20" Padding="0,5,0,8" Width="300" Margin="0,15,0,0" Click="AutoDetectCSSSelectors_Click">Auto-detect .CSS-selectors</Button>
+                <Button Name="CreateNewProject" FontSize="20" Padding="0,5,0,8" FontWeight="Bold" Width="260" Margin="0,15,0,0" Click="CreateNewProject_Click">Create new project!</Button>
+                <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" FontSize="20">
+          <Hyperlink Name="HelpHyperlink" NavigateUri="https://data-excavator.com/need-help/" RequestNavigate="HelpHyperlink_RequestNavigate">Need help?</Hyperlink>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+        <uicontrols:DEWaitLoagerLogsOutput x:Name="WaitLoaderWithLogs" Width="Auto" Height="Auto" Grid.RowSpan="2" Visibility="Hidden" />
+    </Grid>
+</Window>

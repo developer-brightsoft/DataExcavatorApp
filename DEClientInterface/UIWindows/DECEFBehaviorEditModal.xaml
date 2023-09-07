@@ -1,0 +1,78 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DECEFBehaviorEditModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DEClientInterface" 
+        xmlns:de_cef_objects="clr-namespace:ExcavatorSharp.CEF;assembly=ExcavatorSharp" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+        xmlns:fa="http://schemas.fontawesome.io/icons/" 
+        xmlns:uicontrols="clr-namespace:DEClientInterface.UIControls" 
+        Title="PROJECTNAME ? Edit CEF behavior" Height="800" Width="800" 
+        xmlns:uiwindows="clr-namespace:DEClientInterface.UIWindows">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="200*" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="200*" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="42" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <TextBlock TextAlignment="Center" Grid.ColumnSpan="2" Background="#ebf3ff" FontSize="18" TextWrapping="Wrap" Padding="25">In some cases, you may need to perform additional actions on the page before retrieving the data. These settings allow you to interact with pages via JavaScript.</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Padding="10,7,0,0" FontSize="16">URLs pattern:</TextBlock>
+        <TextBox Name="URLsToApplyCEFCrawlingBehaviorSubstringsPattern" Grid.Row="1" Grid.Column="1" Margin="3,3,3,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="URL substring to apply behavior" FontSize="16" />
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Padding="10,7,0,0" FontSize="16">Step1: wait N seconds:</TextBlock>
+        <TextBox Name="BehaviorStep1_WaitAfterPageLoadedSecondsTextArea" Grid.Row="2" Grid.Column="1" Margin="3,3,3,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Time of iddling after page loaded" FontSize="16" />
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Padding="10,7,0,0" FontSize="16">Step2: execute JS script:</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Padding="10,7,0,0" Margin="0,25,10,0" FontSize="14" Foreground="#757575" TextWrapping="Wrap">This script will simply be executed. Here can be any JS code - scroll pages, clicks on some elements and anything else.</TextBlock>
+        <RichTextBox Name="BehaviorStep2_JSScriptToExecute" Grid.Row="3" Tag="JS-script to execute" Margin="3" Padding="5" Grid.Column="1" AcceptsReturn="True" FontSize="14" VerticalScrollBarVisibility="Visible">
+            <FrameworkElement.Resources>
+                <ResourceDictionary>
+                    <Style x:Key="{x:Type Paragraph}" TargetType="{x:Type Paragraph}">
+                        <Setter Property="Block.Margin" Value="0,3,0,3" />
+                    </Style>
+                </ResourceDictionary>
+            </FrameworkElement.Resources>
+        </RichTextBox>
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Padding="10,7,0,0" FontSize="16">Step3: wait K seconds:</TextBlock>
+        <TextBox Name="BehaviorStep3_WaitAfterJSScriptExecutedSeconds" Grid.Row="4" Grid.Column="1" Margin="3,3,3,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Time of iddlind after JS was executed" FontSize="16" />
+        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Padding="10,7,0,0" FontSize="16">Step4: execute JS script - 2:</TextBlock>
+        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Top" Padding="10,7,0,0" Margin="0,25,10,0" FontSize="14" Foreground="#757575" TextWrapping="Wrap">JS-script, which must be executed with results validation. If you set 'check behavior finish' to 'Re-crawl page in cycle until JS-script-2 returns some result', the script should return some value to finish processing the page. This value will be compared with 'control value'</TextBlock>
+        <RichTextBox Name="BehaviorStep4_JSScriptToExecuteAndCheckResults" Grid.Row="5" Margin="3" Padding="5" Grid.Column="1" AcceptsReturn="True" FontSize="14" VerticalScrollBarVisibility="Visible" Tag="JS script to execute">
+            <FrameworkElement.Resources>
+                <ResourceDictionary>
+                    <Style x:Key="{x:Type Paragraph}" TargetType="{x:Type Paragraph}">
+                        <Setter Property="Block.Margin" Value="0,3,0,3" />
+                    </Style>
+                </ResourceDictionary>
+            </FrameworkElement.Resources>
+        </RichTextBox>
+        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Top" Padding="10,7,0,0" FontSize="16">Step4: check behavior finish:</TextBlock>
+        <ComboBox Name="CheckBehaviorFinishRuleSelectBox" Grid.Row="6" Grid.Column="1" Margin="3,3,3,3" FontSize="16" ItemsSource="{Binding Source={local:EnumToItemsSource {x:Type de_cef_objects:CEFCrawlingPageLeaveEventType}}}" />
+        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Top" Padding="10,7,0,0" FontSize="16">Step4: control value:</TextBlock>
+        <TextBox Name="BehaviorStep6_WaitAfterJSScriptExecutedSeconds" Grid.Row="7" Grid.Column="1" Margin="3,3,3,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="The value to be controlled with the 'Check behavior finish' rule" FontSize="16" />
+        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,2,3,3">
+            <Button Name="DeleteBehaviorButton" Padding="15,0" Margin="5,0,0,0" Click="DeleteBehaviorButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="16">Delete behavior</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Name="ApplyBehaviorButton" Padding="15,0" Margin="5,0,0,0" Click="ApplyBehaviorButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <fa5:SvgAwesome Icon="Regular_Save" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" />
+                    <TextBlock FontSize="16" VerticalAlignment="Center" Margin="7,0,0,0">Save behavior</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <uicontrols:DEWaitLoader x:Name="WaitLoader" Width="Auto" Height="Auto" Grid.RowSpan="9" Grid.ColumnSpan="2" Visibility="Hidden" />
+    </Grid>
+</Window>

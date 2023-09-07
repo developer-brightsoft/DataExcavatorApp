@@ -1,0 +1,52 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DEMakeResultsExportByDatesFilter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:localglob="clr-namespace:DEClientInterface" 
+        xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+        xmlns:de_export="clr-namespace:ExcavatorSharp.Exporter;assembly=ExcavatorSharp" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+        xmlns:fa="http://schemas.fontawesome.io/icons/" 
+        xmlns:uicontrols="clr-namespace:DEClientInterface.UIControls" 
+        ResizeMode="NoResize" SizeToContent="Height" Title="PROJECTNAME ? Export all scraped data with dates filtering" Width="450">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="135" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="49" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Start date:</TextBlock>
+        <DatePicker Name="DEStartDateDatePicker" Grid.Row="0" Grid.Column="1" Margin="3" Tag="DD.MM.YYYY" FontSize="16" />
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">End date:</TextBlock>
+        <DatePicker Name="DEEndDateDatePicker" Grid.Row="1" Grid.Column="1" Margin="3" Tag="DD.MM.YYYY" FontSize="16" />
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Export format:</TextBlock>
+        <ComboBox Name="DEExportFormatSelector" Grid.Row="2" Grid.Column="1" Margin="3,3,3,3" FontSize="16" ItemsSource="{Binding Source={localglob:EnumToItemsSource {x:Type de_export:DataExportingFormat}}}" />
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Data type:</TextBlock>
+        <ComboBox Name="DEExportDataTypeSelector" Grid.Row="3" Grid.Column="1" Margin="3,3,3,3" FontSize="16" ItemsSource="{Binding Source={localglob:EnumToItemsSource {x:Type de_export:DataExportingType}}}" />
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Data separator:</TextBlock>
+        <TextBox Name="DEExportSequencesSeparator" Grid.Row="4" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Data sequences separator like a comma" Text="," FontSize="16" />
+        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Export path:</TextBlock>
+        <Grid Row="5" Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="32" />
+            </Grid.ColumnDefinitions>
+            <TextBox Name="DEExportPathTextArea" Grid.Row="0" Grid.Column="0" Margin="3,3,0,3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="Path to export folder" FontSize="16" />
+            <Button Name="SelectExportPathDirectoryButton" Grid.Row="0" Grid.Column="1" Margin="-1,3,3,3" Style="{StaticResource HelpIconRectangle}" Click="SelectExportPathDirectoryButton_Click">
+                <fa5:SvgAwesome Icon="Regular_Folder" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+        </Grid>
+        <Button Name="MakeDataExportButton" Grid.Row="6" Grid.ColumnSpan="2" Margin="3,4,3,4" FontSize="16" Click="MakeDataExportButton_Click">Make data export</Button>
+        <uicontrols:DEDataExportProcessingLoader x:Name="ExportWaitLoader" Width="Auto" Height="Auto" Visibility="Hidden" Grid.ColumnSpan="2" Grid.RowSpan="7" />
+    </Grid>
+</Window>

@@ -1,0 +1,114 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DELinksBufferOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+        xmlns:fa="http://schemas.fontawesome.io/icons/" 
+        xmlns:uicontrols="clr-namespace:DEClientInterface.UIControls" 
+        Title="PROJECTNAME ? Links buffer" Height="600" Width="1000">
+    <Grid>
+        <TabControl>
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <TextBlock Name="CrawledLinksTabHeader" FontSize="18" Padding="10,3">Crawled links</TextBlock>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Menu Background="#2b71bc" FontSize="18">
+                        <MenuItem Margin="0" Padding="0">
+                            <HeaderedItemsControl.Header>
+                                <Border Margin="0,0,0,0" Height="37" Background="#0e4075">
+                                    <Grid Margin="8,0,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa5:SvgAwesome Width="17" Height="17" Icon="Solid_Search" Foreground="#FFFFFFFF" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                            <TextBlock Margin="8,4,0,0" Foreground="#FFFFFFFF">Select links by keyword:</TextBlock>
+                                            <TextBox Name="CrawledLinks_SelectLinksByKeyword_TextArea" Margin="5,4,4,6" Width="150" KeyDown="CrawledLinks_SelectLinksByKeyword_TextArea_KeyDown" />
+                                            <Button Name="CrawledLinks_SelectLinksByKeyword_Button" Margin="0,4,5,5" FontSize="14" Padding="10,0" Click="CrawledLinks_SelectLinksByKeyword_Button_Click">Select</Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </HeaderedItemsControl.Header>
+                        </MenuItem>
+                        <MenuItem Name="RefreshCrawledLinksListMenuItem" Padding="10,4" Foreground="#FFFFFFFF" Header="Refresh links" Click="RefreshCrawledLinksListMenuItem_Click" />
+                        <MenuItem Name="ReindexLinksFromCrawledBufferMenuItem" Padding="10,4" Foreground="#FFFFFFFF" Header="Recrawl selected link(s)" Click="ReindexLinksFromCrawledBufferMenuItem_Click" />
+                        <MenuItem Name="DeleteLinksFromCrawledBufferMenuItem" Padding="10,4" Foreground="#FFFFFFFF" Header="Delete selected link(s)" Click="DeleteLinksFromCrawledBufferMenuItem_Click" />
+                    </Menu>
+                    <Border Grid.Row="1" Background="#ebf3ff">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">? Click on any link to select it. Use Ctrl + mouseclick to select many links, Ctrl + A to select all links ?</TextBlock>
+                    </Border>
+                    <DataGrid Name="CrawledLinksDataGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Page link" Binding="{Binding NormalizedOriginalLink}" />
+                            <DataGridTextColumn Width="150" Header="Resource type" Binding="{Binding LinkResourceType}" />
+                            <DataGridTextColumn Width="150" Header="Date of last crawl" Binding="{Binding LinkLastCrawlingDateAndTime}" />
+                            <DataGridTextColumn Width="150" Header="Date of last OK crawl" Binding="{Binding LinkLastCrawlingSuccessDateTime}" />
+                        </DataGrid.Columns>
+                        <FrameworkElement.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Name="CrawledLinks_CopyLinkAddressFromContextMenu" Header="Copy link address" Click="CrawledLinks_CopyLinkAddressFromContextMenu_Click" />
+                                <MenuItem Name="CrawledLinks_DeleteSelectedLink" Header="Delete link" Click="CrawledLinks_DeleteSelectedLink_Click" />
+                                <MenuItem Name="CrawledLinks_RecrawlLinkFromContextMenu" Header="Recrawl link" Click="CrawledLinks_RecrawlLinkFromContextMenu_Click" />
+                                <MenuItem Name="CrawledLinks_OpenLinkFromContextMenu" Header="Open link" Click="CrawledLinks_OpenLinkFromContextMenu_Click" />
+                            </ContextMenu>
+                        </FrameworkElement.ContextMenu>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <TextBlock Name="LinksToCrawlTabHeader" FontSize="18" Padding="10,3">Links to crawl queue</TextBlock>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Menu Background="#2b71bc" FontSize="18">
+                        <MenuItem Margin="0" Padding="0">
+                            <HeaderedItemsControl.Header>
+                                <Border Margin="0,0,0,0" Height="37" Background="#0e4075">
+                                    <Grid Margin="8,0,0,0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa5:SvgAwesome Width="17" Height="17" Icon="Solid_Search" Foreground="#FFFFFFFF" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                            <TextBlock Margin="8,4,0,0" Foreground="#FFFFFFFF">Select links by keyword:</TextBlock>
+                                            <TextBox Name="LinksToCrawl_SelectLinksByKeyword_TextArea" Margin="5,4,4,6" Width="150" KeyDown="LinksToCrawl_SelectLinksByKeyword_TextArea_KeyDown" />
+                                            <Button Name="LinksToCrawl_SelectLinksByKeyword_Button" Margin="0,4,5,5" FontSize="14" Padding="10,0" Click="LinksToCrawl_SelectLinksByKeyword_Button_Click">Select</Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </HeaderedItemsControl.Header>
+                        </MenuItem>
+                        <MenuItem Name="RefreshLinksToCrawlQueue" Padding="10,4" Foreground="#FFFFFFFF" Header="Refresh links" Click="RefreshLinksToCrawlQueue_Click" />
+                        <MenuItem Name="DeleteLinksFromLinksToCrawlMenuItem" Padding="10,4" Foreground="#FFFFFFFF" Header="Delete selected link(s)" Click="DeleteLinksFromLinksToCrawlMenuItem_Click" />
+                    </Menu>
+                    <Border Grid.Row="1" Background="#ebf3ff">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">? Click on any link to select it. Use Ctrl + mouseclick to select many links, Ctrl + A to select all links ?</TextBlock>
+                    </Border>
+                    <DataGrid Name="LinksToCrawlDataGridQueue" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="*" Header="Page link" Binding="{Binding NormalizedOriginalLink}" />
+                            <DataGridTextColumn Width="150" Header="Resource type" Binding="{Binding LinkResourceType}" />
+                            <DataGridTextColumn Width="150" Header="Last crawl DateTime" Binding="{Binding LinkLastCrawlingDateAndTime}" />
+                            <DataGridTextColumn Width="150" Header="Last OK crawl DateTime" Binding="{Binding LinkLastCrawlingSuccessDateTime}" />
+                        </DataGrid.Columns>
+                        <FrameworkElement.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Name="LinksToCrawl_CopyLinkAddressFromContextMenu" Header="Copy link address" Click="LinksToCrawl_CopyLinkAddressFromContextMenu_Click" />
+                                <MenuItem Name="LinksToCrawl_DeleteSelectedLink" Header="Delete link" Click="LinksToCrawl_DeleteSelectedLink_Click" />
+                                <MenuItem Name="LinksToCrawl_OpenLinkFromContextMenu" Header="Open link" Click="LinksToCrawl_OpenLinkFromContextMenu_Click" />
+                            </ContextMenu>
+                        </FrameworkElement.ContextMenu>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <uicontrols:DEWaitLoader x:Name="WaitLoader" Width="Auto" Height="Auto" Visibility="Hidden" />
+    </Grid>
+</Window>

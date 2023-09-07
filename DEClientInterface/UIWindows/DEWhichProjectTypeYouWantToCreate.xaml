@@ -1,0 +1,36 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DEWhichProjectTypeYouWantToCreate"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+        Title="Choose how to create a project" Height="350" Width="700">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="50*" />
+        </Grid.ColumnDefinitions>
+        <Grid Row="2" Column="0" Background="#f0fffd">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <fa5:SvgAwesome Icon="Solid_Robot" Width="80" Height="80" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <TextBlock Margin="10" FontSize="20" FontWeight="Bold" TextAlignment="Center" Foreground="#169fca">Create project with wizard</TextBlock>
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Margin="15,0,15,20" HorizontalAlignment="Center">Start by entering three .CSS selectors. App will generate a sample project based on it.</TextBlock>
+                <Button Name="CreateProjectWithWizardButton" HorizontalAlignment="Center" FontSize="20" Padding="20,5" Click="CreateProjectWithWizardButton_Click">Create with wizard</Button>
+            </StackPanel>
+        </Grid>
+        <Rectangle Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Center" Width="1" Fill="#333333" Margin="0,4,0,0" />
+        <Grid Row="2" Column="2" Background="#ffffe3">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <fa5:SvgAwesome Icon="Regular_Circle" Width="80" Height="80" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <TextBlock Margin="10" FontSize="20" FontWeight="Bold" TextAlignment="Center" Foreground="#169fca">Create new empty project</TextBlock>
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Margin="15,0,15,20" HorizontalAlignment="Center">Create an empty project and set it up yourself. It's just as quick and easy.</TextBlock>
+                <Button Name="CreateSTDProjectButton" HorizontalAlignment="Center" FontSize="20" Padding="20,5" Click="CreateSTDProjectButton_Click">Create empty project</Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

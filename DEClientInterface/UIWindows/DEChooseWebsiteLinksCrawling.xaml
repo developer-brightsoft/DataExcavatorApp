@@ -1,0 +1,46 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DEChooseWebsiteLinksCrawling"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+        ResizeMode="CanMinimize" Title="PROJECTNAME ? Choose how do you want to scan the pages" Height="640" Width="750">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250" />
+            <RowDefinition Height="7" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="50*" />
+        </Grid.ColumnDefinitions>
+        <Grid Background="#fff6f2" Row="0" ColumnSpan="3">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+                <TextBlock FontSize="18" FontWeight="Bold" HorizontalAlignment="Center">Our app can analyze all pages of the site or only part of them.</TextBlock>
+                <TextBlock VerticalAlignment="Center" TextAlignment="Center" FontSize="18" TextWrapping="Wrap" Margin="20,20,20,0">Some websites may be too large for our application to analyze all pages in a reasonable time. For example, the Amazon.com contains millions of pages and it can take months or even years to fully execute this site.</TextBlock>
+                <TextBlock VerticalAlignment="Center" TextAlignment="Center" FontSize="18" TextWrapping="Wrap" Margin="20,20,20,0">Now you need to choose the way to analyze links on the site. We offer two options - to execute all pages automatically or only those pages that you specify in a special list.</TextBlock>
+            </StackPanel>
+        </Grid>
+        <Separator Grid.Row="1" Grid.ColumnSpan="3" />
+        <Grid Row="2" Column="0" Background="#f0fffd">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <fa5:SvgAwesome Icon="Solid_GlobeAmericas" Width="80" Height="80" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <TextBlock Margin="10" FontSize="20" FontWeight="Bold" TextAlignment="Center" Foreground="#169fca">Analyse ALL pages of the website</TextBlock>
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Margin="15,0,15,20" HorizontalAlignment="Center">The application will extract all links from each downloaded page. Extracted links will be added to the overall scan queue. The application will download all the pages from all the links it can find on the site.</TextBlock>
+                <Button Name="AnalyseAllPages" HorizontalAlignment="Center" FontSize="20" Padding="20,5" Click="AnalyseAllPages_Click">Choose</Button>
+            </StackPanel>
+        </Grid>
+        <Rectangle Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Center" Width="1" Fill="#333333" Margin="0,4,0,0" />
+        <Grid Row="2" Column="2" Background="#ffffe3">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <fa5:SvgAwesome Icon="Regular_FileAlt" Width="80" Height="80" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <TextBlock Margin="10" FontSize="20" FontWeight="Bold" TextAlignment="Center" Foreground="#169fca">Analyze only pages from the list</TextBlock>
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="16" Margin="15,0,15,20" HorizontalAlignment="Center">The application will ask you to enter a list of links to be analyzed. The application will only download and analyze pages from this list. Other pages from this site will NOT be downloaded.</TextBlock>
+                <Button Name="AnalyseSpecifiedLinks" HorizontalAlignment="Center" FontSize="20" Padding="20,5" Click="AnalyseSpecifiedLinks_Click">Choose</Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

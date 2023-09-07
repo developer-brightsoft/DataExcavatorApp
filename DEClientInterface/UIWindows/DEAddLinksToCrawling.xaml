@@ -1,0 +1,24 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DEAddLinksToCrawling"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+        xmlns:uicontrols="clr-namespace:DEClientInterface.UIControls" 
+        Title="PROJECTNAME ? Add links to crawling" Height="500" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">Add 2-3 website URLs to start. Separate URLs with newlines.</TextBlock>
+        <TextBox Name="LinksListTextBox" Grid.Row="1" Margin="5,5,5,5" Padding="5" TextWrapping="Wrap" AcceptsReturn="True" FontSize="14" KeyUp="LinksListTextBox_KeyUp" />
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,5,5" HorizontalAlignment="Center">
+            <Button Name="CancelAddLinksToCrawl" Padding="15,0" Margin="0,0,5,0" FontSize="16" Click="CancelAddLinksToCrawl_Click">Cancel</Button>
+            <Button Name="LoadLinksFromFile" Padding="15,0" Margin="0,0,5,0" FontSize="16" Click="LoadLinksFromFile_Click">Load links from file</Button>
+            <Button Name="AddLinkToCrawlButton" Padding="15,0" FontSize="16" Click="AddLinkToCrawlButton_Click">Add links</Button>
+        </StackPanel>
+        <uicontrols:DEWaitLoader x:Name="AddLinksWaitLoader" Width="Auto" Height="Auto" Visibility="Hidden" Grid.ColumnSpan="2" Grid.RowSpan="7" />
+    </Grid>
+</Window>

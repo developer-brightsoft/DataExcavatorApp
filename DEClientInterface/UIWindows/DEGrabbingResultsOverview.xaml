@@ -1,0 +1,126 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DEGrabbingResultsOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:decore="clr-namespace:ExcavatorSharp.Grabber;assembly=ExcavatorSharp" 
+        xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+        xmlns:uicontrols="clr-namespace:DEClientInterface.UIControls"
+        WindowState="Maximized" Title="PROJECTNAME ? Scraping results" Height="800" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Menu Name="GrabbingResultsOverviewMenu" Background="#2b71bc" FontSize="18">
+            <MenuItem Margin="0" Padding="0">
+                <HeaderedItemsControl.Header>
+                    <Border Margin="0,0,0,0" Height="37" Background="#0e4075">
+                        <Grid Margin="8,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <fa5:SvgAwesome Width="17" Height="17" Icon="Solid_Search" Foreground="#FFFFFFFF" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <TextBlock Margin="8,4,0,0" Foreground="#FFFFFFFF">Select by URL:</TextBlock>
+                                <TextBox Name="GrabbedResultsOVerviewKeywordText" Margin="5,4,4,6" Width="150" KeyDown="GrabbedResultsOVerviewKeywordText_KeyDown" />
+                                <Button Name="GrabbedResultsOverviewSelectButton" Margin="0,4,5,5" FontSize="14" Padding="10,0" Click="GrabbedResultsOverviewSelectButton_Click">Select</Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </HeaderedItemsControl.Header>
+            </MenuItem>
+            <MenuItem Name="ReloadGrabbingResultsData" Padding="10,4" Foreground="#FFFFFFFF" Header="Reload data" Click="ReloadGrabbingResultsData_Click" />
+            <MenuItem Name="CheckNonEmptyResults" Padding="10,4" Foreground="#FFFFFFFF" Header="Check not empty" Click="CheckNonEmptyResults_Click" />
+            <MenuItem Name="ExportResultsByCheckedRowsMenuItem" Padding="10,4" Foreground="#FFFFFFFF" Header="Export checked" Click="ExportResultsByCheckedRowsMenuItem_Click" />
+            <MenuItem Name="DeleteGrabbingResultRow" Padding="10,4" Foreground="#FFFFFFFF" Header="Delete checked" Click="DeleteGrabbingResultRow_Click" />
+            <MenuItem Name="ExportResultsByDateMenuItem" Padding="10,4" Foreground="#FFFFFFFF" Click="ExportResultsByDateMenuItem_Click">
+                <HeaderedItemsControl.Header>
+                    <fa5:SvgAwesome Width="17" Height="17" Icon="Regular_Calendar" Foreground="#FFFFFFFF" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </HeaderedItemsControl.Header>
+            </MenuItem>
+        </Menu>
+        <Grid Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="369" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <TabControl Grid.Row="0">
+                    <TabItem>
+                        <HeaderedContentControl.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="4,4,0,4" Source="/DEClientInterface;component/Media/cube.png" Width="24" />
+                                <Label Margin="5,0" VerticalAlignment="Center" FontSize="16">Objects</Label>
+                            </StackPanel>
+                        </HeaderedContentControl.Header>
+                        <ScrollViewer Margin="0,3,3,3">
+                            <StackPanel Name="DEObjectiveViewResultsStackPanel" Orientation="Vertical" />
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem>
+                        <HeaderedContentControl.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="4,4,0,2" Source="/DEClientInterface;component/Media/json-logo-circle.png" Width="23" />
+                                <Label Margin="4,0" VerticalAlignment="Center" FontSize="16">JSON</Label>
+                            </StackPanel>
+                        </HeaderedContentControl.Header>
+                        <TextBox Name="GrabbedResultsData" Grid.Row="1" Margin="0,3,3,3" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" IsReadOnly="True" />
+                    </TabItem>
+                    <TabItem>
+                        <HeaderedContentControl.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="4,4,0,2" Source="/DEClientInterface;component/Media/picture.png" Width="23" />
+                                <Label Margin="5,0" VerticalAlignment="Center" FontSize="16">Media</Label>
+                            </StackPanel>
+                        </HeaderedContentControl.Header>
+                        <ScrollViewer Name="GrabbedResultsMedia" Grid.Row="1" Background="#ebf3ff" Grid.Column="1" Margin="0,3,1,3" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Hidden">
+                            <StackPanel Name="GrabbedResultsMediaStackPanel" Orientation="Vertical" />
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+                <Grid Name="ViewDataDetailsOverlay" Background="#ebf3ff" RowSpan="2" Opacity=".9">
+                    <StackPanel HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center">
+                        <Image Source="/DEClientInterface;component/Media/cubes.png" Width="128" />
+                        <Label HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" Margin="0,10,0,5">View data</Label>
+                        <TextBlock HorizontalAlignment="Center" FontSize="16" TextWrapping="Wrap">Doubleclick on the grid row</TextBlock>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <Grid Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="38" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid Row="0" Background="#FFDADADA">
+                    <TextBlock Name="ResultsCounterTextBlock" Grid.Row="2" VerticalAlignment="Center" FontSize="18" Margin="12,0,0,0" />
+                </Grid>
+                <DataGrid Name="ResultsOverviewGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" EnableColumnVirtualization="True" EnableRowVirtualization="True" MouseDoubleClick="ResultsOverviewGrid_MouseDoubleClick">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn IsReadOnly="True" Width="150" Header="Date of scraping" Binding="{Binding PageGrabbedDateTime}" />
+                        <DataGridTextColumn IsReadOnly="True" Width="*" Header="Page URL" Binding="{Binding GrabbedPageUrl}" />
+                        <DataGridTextColumn IsReadOnly="True" Width="80" Header="Have results?" Binding="{Binding HasResults}" />
+                        <DataGridTextColumn IsReadOnly="True" Width="80" Header="Data size, Kb" Binding="{Binding DataSizeKb}" />
+                        <DataGridTextColumn IsReadOnly="True" Width="80" Header="Files count" Binding="{Binding BinaryFilesCount}" />
+                        <DataGridCheckBoxColumn Width="26" Binding="{Binding Path=IsChecked, UpdateSourceTrigger=PropertyChanged}">
+                            <DataGridColumn.Header>
+                                <CheckBox Name="HeadingCheckbox" IsChecked="False" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" />
+                            </DataGridColumn.Header>
+                        </DataGridCheckBoxColumn>
+                    </DataGrid.Columns>
+                    <FrameworkElement.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Name="GrabbedResults_CopyLinkAddressFromContextMenu" Header="Copy link address" Click="GrabbedResults_CopyLinkAddressFromContextMenu_Click" />
+                            <MenuItem Name="GrabbedResults_DeleteSelectedLink" Header="Delete item" Click="GrabbedResults_DeleteSelectedLink_Click" />
+                            <MenuItem Name="GrabbedResults_OpenLinkFromContextMenu" Header="Open link" Click="GrabbedResults_OpenLinkFromContextMenu_Click" />
+                        </ContextMenu>
+                    </FrameworkElement.ContextMenu>
+                </DataGrid>
+            </Grid>
+        </Grid>
+        <uicontrols:DEWaitLoader x:Name="WaitLoader" Width="Auto" Height="Auto" Grid.RowSpan="4" Visibility="Collapsed" />
+        <uicontrols:DEWaitLoagerLogsOutputWithProgressBar x:Name="WaitLoaderWithProgressBar" Width="Auto" Height="Auto" Grid.RowSpan="4" Visibility="Collapsed" />
+        <Border Name="MainWindowShadowOverlay" Grid.RowSpan="4" Background="#cccccc" Width="Auto" Height="Auto" Visibility="Collapsed" Style="{StaticResource VisibleAnimation}" />
+    </Grid>
+</Window>

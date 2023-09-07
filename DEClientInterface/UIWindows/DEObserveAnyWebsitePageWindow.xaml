@@ -1,0 +1,55 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DEObserveAnyWebsitePageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+        xmlns:uicontrols="clr-namespace:DEClientInterface.UIControls" 
+        xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf" 
+        Title="PROJECTNAME ? Empty browser" Height="800" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="#2c71be">
+            <Grid Margin="6" Background="#ebf3ff">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="175" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16">Any website URL:</TextBlock>
+                <TextBox Name="ExamplePageUrl" Grid.Column="1" Padding="10,2" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" KeyDown="ExamplePageUrl_KeyDown" />
+                <Button Name="TryToOpenPageButton" Grid.Column="2" FontSize="16" Click="TryToOpenPageButton_Click">Open</Button>
+                <Button Name="TryToReloadPageBytton" Grid.Column="3" FontSize="16" Click="TryToReloadPageBytton_Click">Reload</Button>
+            </Grid>
+        </Border>
+        <TabControl Name="TestTaskTabControl" Grid.Row="1">
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <TextBlock Margin="10,5" FontSize="16">Rendered page (Browser)</TextBlock>
+                </HeaderedContentControl.Header>
+                <Grid>
+                    <ScrollViewer Name="RenderedPageScrollViewer" HorizontalScrollBarVisibility="Visible">
+                        <wpf:ChromiumWebBrowser Name="ChromiumWebBrowserInstance" />
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <TextBlock Margin="10,5" FontSize="16">Page HTML source</TextBlock>
+                </HeaderedContentControl.Header>
+                <TextBox Name="PageSourceTextBox" TextWrapping="Wrap" Padding="5" FontSize="14" IsReadOnly="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" />
+            </TabItem>
+            <TabItem>
+                <HeaderedContentControl.Header>
+                    <TextBlock Margin="10,5" FontSize="16">Browser logs</TextBlock>
+                </HeaderedContentControl.Header>
+                <ListBox Name="TestProjectSettings_BrowserLogs" />
+            </TabItem>
+        </TabControl>
+        <uicontrols:DEWaitLoagerLogsOutput x:Name="WaitLoaderWithLogs" Width="Auto" Height="Auto" Grid.RowSpan="2" Visibility="Hidden" />
+    </Grid>
+</Window>

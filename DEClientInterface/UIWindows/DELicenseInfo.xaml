@@ -1,0 +1,23 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DELicenseInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+        ResizeMode="CanMinimize" Title="License information" Height="220" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="6" />
+            <RowDefinition Height="44" />
+        </Grid.RowDefinitions>
+        <TextBlock Name="LicenseInformationText" Grid.Row="0" Margin="40,10" FontSize="18" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+        <Separator Grid.Row="1" />
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,2">
+            <Button Name="VisitWebsiteButton" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="14,7" Margin="2,0" Click="VisitWebsiteButton_Click">Visit website</Button>
+            <Button Name="EnterLicenseKeyButton" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="14,7" Margin="3,0" Click="EnterLicenseKeyButton_Click">Enter license key</Button>
+            <Button Name="GetDemoKeyButton" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="14,7" Margin="3,0" FontWeight="Bold" Click="GetDemoKeyButton_Click">Get demo key (30 days for FREE)</Button>
+        </StackPanel>
+        <Border Name="ShadowOverlay" Grid.RowSpan="3" Panel.ZIndex="10" Background="#cccccc" Visibility="Hidden" Style="{StaticResource VisibleAnimation}" />
+    </Grid>
+</Window>

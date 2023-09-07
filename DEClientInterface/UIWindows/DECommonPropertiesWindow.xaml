@@ -1,0 +1,64 @@
+﻿<Window x:Class="DEClientInterface.UIWindows.DECommonPropertiesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        		xmlns:local="clr-namespace:DEClientInterface.UIWindows" 
+		xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+	    xmlns:fa="http://schemas.fontawesome.io/icons/" 
+		ResizeMode="NoResize" SizeToContent="Height" Title="Data Excavator common properties" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="175" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="37" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Default user-agent:</TextBlock>
+        <TextBox Name="DECEFUserAgentTextArea" Grid.Row="0" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="User-agent for crawling" FontSize="16" />
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Proxy test link:</TextBlock>
+        <TextBox Name="DEProxyTestingLink" Grid.Row="1" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="https://www.wikipedia.org/" FontSize="16" />
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Proxy OK substring:</TextBlock>
+        <TextBox Name="DEProxyResponseTest" Grid.Row="2" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="wikipedia" FontSize="16" />
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Trusted hosts:</TextBlock>
+        <TextBox Name="DETrustedHostsGlobal" Grid.Row="3" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="https://somehost1.domain" FontSize="16" />
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Max HTTP connects:</TextBlock>
+        <TextBox Name="DEHttpConnectionsCount" Grid.Row="4" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="100" FontSize="16" />
+        <TextBlock Grid.Column="0" Grid.Row="5" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Expect100Continue:</TextBlock>
+        <ComboBox Name="DEExpectOneHundredContinue" Grid.Column="1" Grid.Row="5" Margin="3" FontSize="16">
+            <ComboBoxItem Tag="true">Yes</ComboBoxItem>
+            <ComboBoxItem Tag="false">No</ComboBoxItem>
+        </ComboBox>
+        <TextBlock Grid.Column="0" Grid.Row="6" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Check revoc. list:</TextBlock>
+        <ComboBox Name="DECheckCertificateRevocList" Grid.Column="1" Grid.Row="6" Margin="3" FontSize="16">
+            <ComboBoxItem Tag="true">Yes</ComboBoxItem>
+            <ComboBoxItem Tag="false">No</ComboBoxItem>
+        </ComboBox>
+        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Max crawl-delay:</TextBlock>
+        <TextBox Name="DEMaxCrawlDelayWaitSeconds" Grid.Row="7" Grid.Column="1" Margin="3" Style="{StaticResource TextBoxWithPlaceholder}" Tag="60" FontSize="16" />
+        <TextBlock Grid.Column="0" Grid.Row="8" VerticalAlignment="Center" Padding="10,0,0,0" FontSize="16">Send crash reports:</TextBlock>
+        <ComboBox Name="DEAllowToSendCrashReports" Grid.Column="1" Grid.Row="8" Margin="3" FontSize="16">
+            <ComboBoxItem Tag="true">Yes</ComboBoxItem>
+            <ComboBoxItem Tag="false">No</ComboBoxItem>
+        </ComboBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="9" Grid.ColumnSpan="2">
+            <Button Name="ApplyCommonProperties" Grid.ColumnSpan="2" Margin="3,3,3,3" Padding="15,0" FontSize="16" Click="ApplyCommonProperties_Click">
+                <StackPanel Orientation="Horizontal">
+                    <fa5:SvgAwesome Icon="Regular_Save" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" />
+                    <TextBlock VerticalAlignment="Center" Margin="7,0,0,0">Save common properties</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

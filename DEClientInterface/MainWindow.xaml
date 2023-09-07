@@ -1,0 +1,79 @@
+﻿<Window x:Class="DEClientInterface.MainWindow" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:local="clr-namespace:DEClientInterface" 
+    xmlns:fa5="http://schemas.fontawesome.com/icons/" 
+    xmlns:uicontrols="clr-namespace:DEClientInterface.UIControls" 
+    WindowStartupLocation="CenterScreen" WindowState="Maximized" Title="Data Excavator App v1.0" Height="700" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="26" />
+        </Grid.RowDefinitions>
+        <Menu Name="DEMainMenu" FontSize="18" Background="#2b71bc">
+            <MenuItem Header="File" Padding="10,5" Foreground="#FFFFFFFF">
+                <MenuItem Name="TopMenu_ProjectMaster" Padding="0,5" Foreground="#FF000000" Header="New project" Click="TopMenu_ProjectMaster_Click" />
+                <MenuItem Name="TopMenu_CreateNewProjectFromImportFile" Padding="0,5" Foreground="#FF000000" Header="Import project from file" Click="TopMenu_CreateNewProjectFromImportFile_Click" />
+                <Separator />
+                <MenuItem Name="MainMenu_SettingsMenuItem" Padding="0,5" Foreground="#FF000000" Header="Common settings" Click="MainMenu_SettingsMenuItem_Click" />
+                <Separator />
+                <MenuItem Name="MainMenu_ExitMenuItem" Padding="0,5" Foreground="#FF000000" Header="Exit" Click="MainMenu_ExitMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Name="MainMenu_LicenseMenuItem" Header="License" Padding="10,5" Foreground="#FFFFFFFF" Click="MainMenu_LicenseMenuItem_Click" />
+            <MenuItem Name="MainMenu_HelpMenuItem" Header="Help" Padding="10,5" Foreground="#FFFFFFFF" Click="MainMenu_HelpMenuItem_Click" />
+        </Menu>
+        <TabControl Name="MainTabControl" Grid.Row="1" Grid.RowSpan="2">
+            <ItemsControl.Items>
+                <TabItem>
+                    <HeaderedContentControl.Header>
+                        <StackPanel Orientation="Horizontal" Margin="6">
+                            <Image Margin="4,4,0,4" Source="/DEClientInterface;component/Media/data-main.png" Width="36" />
+                            <StackPanel Margin="10,-2,10,0" Orientation="Vertical">
+                                <TextBlock FontSize="20">My projects</TextBlock>
+                                <TextBlock FontSize="13">Working projects list</TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </HeaderedContentControl.Header>
+                    <Grid>
+                        <ScrollViewer Name="MyProjectsWrapPanelScrollViewer" Grid.Row="1" Grid.RowSpan="2" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden">
+                            <WrapPanel Name="DEProjectsArea" Height="Auto" Width="{Binding ElementName=MyProjectsWrapPanelScrollViewer, Path=ViewportWidth}">
+                                <Panel.Background>
+                                    <ImageBrush ImageSource="white-app-background.jpg" Opacity="1" Stretch="UniformToFill" />
+                                </Panel.Background>
+                            </WrapPanel>
+                        </ScrollViewer>
+                        <uicontrols:DEAppNoProjectsYet x:Name="NoProjectsYetOverlay" Grid.RowSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" />
+                        <uicontrols:DELicenseNotActiveYet x:Name="LicenseNotActiveYet" Grid.RowSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" />
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <HeaderedContentControl.Header>
+                        <StackPanel Orientation="Horizontal" Margin="6">
+                            <Image Margin="4,4,0,4" Source="/DEClientInterface;component/Media/data-templates.png" Width="36" />
+                            <StackPanel Margin="10,-2,10,0" Orientation="Vertical">
+                                <TextBlock FontSize="20">Templates</TextBlock>
+                                <TextBlock FontSize="13">Pre-built scrapers</TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </HeaderedContentControl.Header>
+                    <ScrollViewer Name="ScrapingTemplatesWrapPanelScrollViewer" Grid.Row="1" Grid.RowSpan="2" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden">
+                        <WrapPanel Name="DEScrapingTemplatesArea" Height="Auto" Width="{Binding ElementName=ScrapingTemplatesWrapPanelScrollViewer, Path=ViewportWidth}">
+                            <Panel.Background>
+                                <ImageBrush ImageSource="white-app-background.jpg" Opacity="1" Stretch="UniformToFill" />
+                            </Panel.Background>
+                        </WrapPanel>
+                    </ScrollViewer>
+                </TabItem>
+            </ItemsControl.Items>
+        </TabControl>
+        <Grid Name="ErrorsInformationPanel" Row="2" Visibility="Hidden" Background="#FFFFA9A9">
+            <TextBlock Name="ErrorsInformationPanelText" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16" Padding="5,0,0,0" />
+        </Grid>
+        <uicontrols:DEWaitLoader x:Name="WaitLoader" Grid.RowSpan="5" Grid.Row="0" Width="Auto" Height="Auto" Visibility="Hidden" />
+        <uicontrols:DEAppMainWindowWailtLoader x:Name="AppLoaderOverlay" Grid.Row="0" Grid.RowSpan="3" Width="Auto" Height="Auto" Visibility="Visible" Opacity="0.8" />
+        <Border Name="MainWindowShadowOverlay" Grid.RowSpan="3" Background="#cccccc" Visibility="Hidden" Style="{StaticResource VisibleAnimation}" />
+    </Grid>
+</Window>

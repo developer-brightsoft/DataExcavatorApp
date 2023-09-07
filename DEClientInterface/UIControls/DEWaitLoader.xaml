@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="DEClientInterface.UIControls.DEWaitLoader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DEClientInterface.UIControls" xmlns:fa5="http://schemas.fontawesome.com/icons/"
+             mc:Ignorable="d" 
+             xmlns:namespace="clr-namespace:DEClientInterface.UIControls"
+             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Height="Auto" Width="Auto" Opacity="0.7">
+    <Grid Background="#FFFFFFFF">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <fa5:SvgAwesome Icon="Solid_Spinner" Spin="True" Width="60" Height="60" Foreground="#2b71bc" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock Margin="0,10" FontSize="28">Processing...</TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>
