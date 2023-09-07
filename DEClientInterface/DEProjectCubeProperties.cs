@@ -749,33 +749,33 @@ namespace DEClientInterface
 			}
 			bool flag6 = false;
 			LicenseKey actualLicenseKeyCopy = MainWindowLink.DETasksFactoryCoreStorage.GetActualLicenseKeyCopy();
-			if (actualLicenseKeyCopy.KeyTotalThreadsLimitPerProject != -1 && num > actualLicenseKeyCopy.KeyTotalThreadsLimitPerProject)
-			{
-				DETaskCrawlingServerCrawlingThreadsCountTextArea.MarkAsUncorrectlyCompleted();
-				flag4 = true;
-				tabItem = TabItemCrawlerProperties;
-				flag6 = true;
-			}
-			if (actualLicenseKeyCopy.KeyTotalThreadsLimitPerProject != -1 && num2 > actualLicenseKeyCopy.KeyTotalThreadsLimitPerProject)
-			{
-				DETaskGrabbingServerGrabbingThreadsCountTextArea.MarkAsUncorrectlyCompleted();
-				flag4 = true;
-				tabItem = TabItemCrawlerProperties;
-				flag6 = true;
-			}
-			if (flag6)
-			{
-				System.Windows.MessageBox.Show($"The license key you use is limited to {actualLicenseKeyCopy.KeyTotalThreadsLimitPerProject} threads. Please, reduce the number of threads in the [Crawler settings tab] and the [Scraper settings tab].", "License limitation error", MessageBoxButton.OK, MessageBoxImage.Hand);
-			}
-			if (flag4)
-			{
-				if (tabItem != null)
-				{
-					TaskPropertiesTabControl.SelectedItem = tabItem;
-				}
-				System.Windows.MessageBox.Show("Some of the settings fields have incorrect values. Please check all fields values and repeat saving.", "Fields validation error", MessageBoxButton.OK, MessageBoxImage.Hand);
-				return null;
-			}
+			// if (actualLicenseKeyCopy.KeyTotalThreadsLimitPerProject != -1 && num > actualLicenseKeyCopy.KeyTotalThreadsLimitPerProject)
+			// {
+			// 	DETaskCrawlingServerCrawlingThreadsCountTextArea.MarkAsUncorrectlyCompleted();
+			// 	flag4 = true;
+			// 	tabItem = TabItemCrawlerProperties;
+			// 	flag6 = true;
+			// }
+			// if (actualLicenseKeyCopy.KeyTotalThreadsLimitPerProject != -1 && num2 > actualLicenseKeyCopy.KeyTotalThreadsLimitPerProject)
+			// {
+			// 	DETaskGrabbingServerGrabbingThreadsCountTextArea.MarkAsUncorrectlyCompleted();
+			// 	flag4 = true;
+			// 	tabItem = TabItemCrawlerProperties;
+			// 	flag6 = true;
+			// }
+			// if (flag6)
+			// {
+			// 	System.Windows.MessageBox.Show($"The license key you use is limited to {actualLicenseKeyCopy.KeyTotalThreadsLimitPerProject} threads. Please, reduce the number of threads in the [Crawler settings tab] and the [Scraper settings tab].", "License limitation error", MessageBoxButton.OK, MessageBoxImage.Hand);
+			// }
+			// if (flag4)
+			// {
+			// 	if (tabItem != null)
+			// 	{
+			// 		TaskPropertiesTabControl.SelectedItem = tabItem;
+			// 	}
+			// 	System.Windows.MessageBox.Show("Some of the settings fields have incorrect values. Please check all fields values and repeat saving.", "Fields validation error", MessageBoxButton.OK, MessageBoxImage.Hand);
+			// 	return null;
+			// }
 			for (int l = 0; l < MainWindowLink.DEUIProjectsStorage.SavedProjectsLinks.Count; l++)
 			{
 				if (MainWindowLink.DEUIProjectsStorage.SavedProjectsLinks[l].ProjectName == text && MainWindowLink.DEUIProjectsStorage.SavedProjectsLinks[l].TaskLink.GetHashCode() != LinkedUITask.TaskLink.GetHashCode())

@@ -699,12 +699,12 @@ namespace DEClientInterface.Controls
 
         private void MenuItemCopyProject_Click(object sender, RoutedEventArgs e)
         {
-            LicenseKey actualLicenseKeyCopy = ParentWindowLink.DETasksFactoryCoreStorage.GetActualLicenseKeyCopy();
-            if (actualLicenseKeyCopy.KeyProjectsLimit != -1 && ParentWindowLink.DETasksFactoryCoreStorage.GetTasksList().Count + 1 > actualLicenseKeyCopy.KeyProjectsLimit)
-            {
-                MessageBox.Show($"Your license key is limited to {actualLicenseKeyCopy.KeyProjectsLimit} projects. You cannot copy a project because you have already reached the maximum number of projects.", "License limitation error", MessageBoxButton.OK, MessageBoxImage.Hand);
-                return;
-            }
+            // LicenseKey actualLicenseKeyCopy = ParentWindowLink.DETasksFactoryCoreStorage.GetActualLicenseKeyCopy();
+            // if (actualLicenseKeyCopy.KeyProjectsLimit != -1 && ParentWindowLink.DETasksFactoryCoreStorage.GetTasksList().Count + 1 > actualLicenseKeyCopy.KeyProjectsLimit)
+            // {
+            //     MessageBox.Show($"Your license key is limited to {actualLicenseKeyCopy.KeyProjectsLimit} projects. You cannot copy a project because you have already reached the maximum number of projects.", "License limitation error", MessageBoxButton.OK, MessageBoxImage.Hand);
+            //     return;
+            // }
             DataExcavatorTask taskLink = DataExcavatorUIProjectLink.TaskLink;
             DataExcavatorTaskIO dataExcavatorTaskIO = new DataExcavatorTaskIO();
             string jSONData = dataExcavatorTaskIO.ExportDETaskIntoJSON(taskLink);

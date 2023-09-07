@@ -113,23 +113,23 @@ namespace DEClientInterface
                     NoProjectsYetOverlay.MainWindowLink = this;
                     LicenseNotActiveYet.MainWindowLink = this;
                     TemplatesStorage.Initialize();
-                    if (DETasksFactoryCoreStorage.GetActualLicenseKeyCopy() == null || !DETasksFactoryCoreStorage.GetActualLicenseKeyCopy().IsProductCodeValid() || !DETasksFactoryCoreStorage.GetActualLicenseKeyCopy().IsKeyDateValidAndNonOutdated())
-                    {
-                        SetLicenseInactiveOrExpiredUIState();
-                    }
-                    if (!DELicenseInfo.IsLicenseOK(this))
-                    {
-                        AppLoaderOverlay.Visibility = Visibility.Hidden;
-                        LicenseNotActiveYet.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
+                    // if (DETasksFactoryCoreStorage.GetActualLicenseKeyCopy() == null || !DETasksFactoryCoreStorage.GetActualLicenseKeyCopy().IsProductCodeValid() || !DETasksFactoryCoreStorage.GetActualLicenseKeyCopy().IsKeyDateValidAndNonOutdated())
+                    // {
+                    //     SetLicenseInactiveOrExpiredUIState();
+                    // }
+                    // if (!DELicenseInfo.IsLicenseOK(this))
+                    // {
+                    //     AppLoaderOverlay.Visibility = Visibility.Hidden;
+                    //     LicenseNotActiveYet.Visibility = Visibility.Visible;
+                    // }
+                    // else
+                    // {
                         if (DEUIProjectsStorage.SavedProjectsLinks.Count == 0)
                         {
                             NoProjectsYetOverlay.Visibility = Visibility.Visible;
                         }
                         AppLoaderOverlay.Visibility = Visibility.Hidden;
-                    }
+                    // }
                 });
             });
         }
