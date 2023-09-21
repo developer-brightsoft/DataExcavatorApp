@@ -5,11 +5,14 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Windows.Threading;
 using CefSharp.Wpf;
 using DEClientInterface;
 using DEClientInterface.Controls;
@@ -22,6 +25,9 @@ using ExcavatorSharp.CEF;
 using ExcavatorSharp.Common;
 using ExcavatorSharp.Excavator;
 using ExcavatorSharp.Licensing;
+using ExcavatorSharp.Objects;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace DEClientInterface
 {
@@ -60,11 +66,131 @@ namespace DEClientInterface
         public DEProjectTemplatesStorage TemplatesStorage { get; set; }
 
         public UIOverlayController overlayController { get; set; }
+
+        private DispatcherTimer mediaPlayerTimer = null;
+
         public MainWindow()
         {
             InitializeComponent();
             base.Closing += MainWindow_Closing;
             base.Loaded += MainWindow_Loaded;
+
+            mediaPlayerTimer = new DispatcherTimer();
+            mediaPlayerTimer.Interval = TimeSpan.FromMinutes(1);
+            mediaPlayerTimer.Tick += MediaPlayerTimer_Tick;
+            mediaPlayerTimer.Start();
+        }
+
+        private void MediaPlayerTimer_Tick(object sender, EventArgs e)
+        {
+            mediaPlayerTimer.Stop();
+
+            DEUIProjectsStorage = new ProjectsStorage();
+            DEUIProjectsStorage.LoadIndexFileFromHDD(this);
+            if (DEUIProjectsStorage.SavedProjectsLinks.Count > 0)
+            {
+                foreach (var project in DEUIProjectsStorage.SavedProjectsLinks)
+                {
+                    if (project.ProjectName == "immoscout24")
+                    {
+                        var websiteRootUrl = project.TaskLink.WebsiteRootUrl;
+                        List<string> LinksSeparated = new List<string>();
+
+                        if (websiteRootUrl != null && websiteRootUrl == "https://www.immoscout24.ch")
+                        {
+                            string[] cities = { "bern", "geneve", "zuerich" };
+                            string[] propertyTypes = { "real-estate", "flat", "house", "plot", "parking-space", "multi-family-residential", "office-commerce-industry", "agriculture", "other-objects" };
+                            foreach (var city in cities)
+                            {
+                                foreach (var propertyType in propertyTypes)
+                                {
+                                    LinksSeparated.Add("https://www.immoscout24.ch/en/" + propertyType + "/buy/city-" + city);
+                                }
+                            }
+                        }
+
+                        CrawlingServerAddLinkToCrawlResults LinksAddingResults = null;
+
+
+                        Task.Run(delegate
+                        {
+                            LinksAddingResults = project.TaskLink.AddLinksToCrawling(LinksSeparated.ToList());
+                            if (LinksAddingResults.AddedLinksCount > 0 || LinksAddingResults.LinksAddingLogs.Count > 0)
+                            {
+                                project.TaskLink.StartTask(delegate
+                                {
+                                    base.Dispatcher.Invoke(delegate
+                                    {
+                                        project.ProjectCubeLink.DEScraperRunningIcon.Visibility = Visibility.Visible;
+                                        project.ProjectCubeLink.SetStatusStringData("Task running", System.Windows.Media.Brushes.Green);
+                                        project.ProjectCubeLink.StartCountersRefresher();
+                                    });
+                                });
+                                bool flag = false;
+                                DataExcavatorTaskActualMetric taskActualMetrics = project.TaskLink.GetTaskActualMetrics();
+                                var pagesToCrawlQueueLength = taskActualMetrics.PagesToCrawlQueueLength;
+                                if (pagesToCrawlQueueLength == 0)
+                                {
+                                    flag = true;
+                                }
+                                while (!flag)
+                                {
+                                    taskActualMetrics = project.TaskLink.GetTaskActualMetrics();
+                                    if (taskActualMetrics.PagesToCrawlQueueLength == 0 && taskActualMetrics.PagesToGrabQueueLengh == 0 && taskActualMetrics.TotalCrawledPagesCount > pagesToCrawlQueueLength)
+                                    {
+                                        flag = true;
+                                    }
+                                }
+                                project.ProjectCubeLink.MarkProjectAsCompleted();
+                                base.Dispatcher.Invoke(async delegate
+                                {
+                                    bool IsErrorOccured = false;
+                                    try
+                                    {
+                                        string jsonData = project.TaskLink.GetGrabbedData();
+
+                                        RestClient restClient = new RestClient("https://test-realpromarket.com");
+                                        RestRequest restRequest = new RestRequest("/properties/SynchronizePropertiesDataExcavator", Method.POST);
+                                        restRequest.AddParameter("application/json", jsonData, ParameterType.RequestBody);
+
+                                        IRestResponse restResponse = restClient.Execute(restRequest);
+                                        string content = restResponse.Content;
+                                        ApiResponse response = JsonConvert.DeserializeObject<ApiResponse>(content);
+                                        if (response != null && !response.Success)
+                                        {
+                                            IsErrorOccured = true;
+                                            MessageBox.Show(response.Response, "Sync data error", MessageBoxButton.OK, MessageBoxImage.Hand);
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        IsErrorOccured = true;
+                                        Logger.LogError("Error in call api sync data", ex);
+                                        App.TrySendAppCrashReport(ex, "Error in call api sync data");
+                                        MessageBox.Show(ex.Message.ToString(), "Sync data error", MessageBoxButton.OK, MessageBoxImage.Hand);
+                                    }
+                                    finally
+                                    {
+                                        if (!IsErrorOccured)
+                                        {
+                                            /*MessageBox.Show("Sync data completed", "Sync data", MessageBoxButton.OK, MessageBoxImage.Asterisk);*/
+                                        }
+                                        base.Dispatcher.Invoke(delegate
+                                        {
+                                            project.ProjectCubeLink.DEScraperRunningIcon.Visibility = Visibility.Hidden;
+                                        });
+                                    }
+
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+
+
+            mediaPlayerTimer.Interval = TimeSpan.FromDays(1);
+            mediaPlayerTimer.Start();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

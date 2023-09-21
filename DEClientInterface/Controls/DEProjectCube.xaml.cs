@@ -1,15 +1,26 @@
-﻿using DEClientInterface.Logic;
+﻿using CefSharp;
+using CefSharp.Web;
+using DEClientInterface.InterfaceLogic;
+using DEClientInterface.Logic;
 using DEClientInterface.Objects;
 using DEClientInterface.UIExtensions;
 using DEClientInterface.UIWindows;
 using ExcavatorSharp.Excavator;
+using ExcavatorSharp.Exporter;
 using ExcavatorSharp.Licensing;
 using ExcavatorSharp.Objects;
 using FontAwesome5.WPF;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Mime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,10 +30,13 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace DEClientInterface.Controls
 {
@@ -538,6 +552,107 @@ namespace DEClientInterface.Controls
                     }
                 });
             });
+        }
+
+        private void MenuItemSyncResults_Click(object sender, RoutedEventArgs e)
+        {
+            var websiteRootUrl = DataExcavatorUIProjectLink.TaskLink.WebsiteRootUrl; 
+            List<string> LinksSeparated = new List<string>();
+
+            if (websiteRootUrl != null && websiteRootUrl == "https://www.immoscout24.ch")
+            {
+                string[] cities = { "bern", "geneve", "zuerich" };
+                string[] propertyTypes = { "real-estate", "flat", "house", "plot", "parking-space", "multi-family-residential", "office-commerce-industry", "agriculture", "other-objects" };
+                foreach (var city in cities)
+                {
+                    foreach (var propertyType in propertyTypes)
+                    {
+                       LinksSeparated.Add("https://www.immoscout24.ch/en/" + propertyType + "/buy/city-" + city);
+                    }
+                }
+            }
+            else if (websiteRootUrl != null && websiteRootUrl == "https://flatfox.ch")
+            {
+                LinksSeparated.Add("https://flatfox.ch/en/search/?east=11.157703&north=48.606300&south=44.977279&west=5.290717");
+            }
+            CrawlingServerAddLinkToCrawlResults LinksAddingResults = null;
+
+
+            Task.Run(delegate
+            {
+                LinksAddingResults = DataExcavatorUIProjectLink.TaskLink.AddLinksToCrawling(LinksSeparated.ToList());
+                if (LinksAddingResults.AddedLinksCount > 0 || LinksAddingResults.LinksAddingLogs.Count > 0)
+                {
+                    DataExcavatorUIProjectLink.TaskLink.StartTask(delegate
+                    {
+                        base.Dispatcher.Invoke(delegate
+                        {
+                            DEScraperRunningIcon.Visibility = Visibility.Visible;
+                            SetStatusStringData("Task running", Brushes.Green);
+                            CubeActionsMutexEmulator = false;
+                            StartCountersRefresher();
+                        });
+                    });
+                    bool flag = false;
+                    DataExcavatorTaskActualMetric taskActualMetrics = DataExcavatorUIProjectLink.TaskLink.GetTaskActualMetrics();
+                    var pagesToCrawlQueueLength = taskActualMetrics.PagesToCrawlQueueLength;
+                    if (pagesToCrawlQueueLength == 0)
+                    {
+                        flag = true;
+                    }
+                    while (!flag)
+                    {
+                        taskActualMetrics = DataExcavatorUIProjectLink.TaskLink.GetTaskActualMetrics();
+                    CrawlingServerProperties crawlingServerPropertiesCopy = DataExcavatorUIProjectLink.TaskLink.GetCrawlingServerPropertiesCopy();
+                        if (!crawlingServerPropertiesCopy.ReindexCrawledPages && taskActualMetrics.PagesToCrawlQueueLength == 0 && taskActualMetrics.PagesToGrabQueueLengh == 0 && taskActualMetrics.TotalCrawledPagesCount >= pagesToCrawlQueueLength)
+                        {
+                            flag = true;
+                        }
+                    }
+                    MarkProjectAsCompleted();
+                    base.Dispatcher.Invoke(async delegate
+                    {
+                        bool IsErrorOccured = false;
+                        try
+                        {
+                            string jsonData = DataExcavatorUIProjectLink.TaskLink.GetGrabbedData();
+
+                            RestClient restClient = new RestClient("https://lower.test-realpromarket.com");
+                            RestRequest restRequest = new RestRequest("/properties/SynchronizePropertiesDataExcavator", Method.POST);
+                            restRequest.AddParameter("application/json", jsonData, ParameterType.RequestBody);
+
+                            IRestResponse restResponse = restClient.Execute(restRequest);
+                            string content = restResponse.Content;
+                            ApiResponse response = JsonConvert.DeserializeObject<ApiResponse>(content);
+                            if (response != null && !response.Success)
+                            {
+                                IsErrorOccured = true;
+                                MessageBox.Show(response.Response, "Sync data error", MessageBoxButton.OK, MessageBoxImage.Hand);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            IsErrorOccured = true;
+                            Logger.LogError("Error in call api sync data", ex);
+                            App.TrySendAppCrashReport(ex, "Error in call api sync data");
+                            MessageBox.Show(ex.Message.ToString(), "Sync data error", MessageBoxButton.OK, MessageBoxImage.Hand);
+                        }
+                        finally
+                        {
+                            if (!IsErrorOccured)
+                            {
+                                MessageBox.Show("Sync data completed", "Sync data", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                            }
+                            base.Dispatcher.Invoke(delegate
+                            {
+                                DEScraperRunningIcon.Visibility = Visibility.Hidden;
+                            });
+                        }
+
+                    });
+                }
+            });
+
         }
 
         private void GrabbingResultsOverviewModal_Closed(object sender, EventArgs e)

@@ -21,43 +21,51 @@
                 </Grid>
             </Border>
             <Menu Height="34" Grid.Row="1" Background="#2b71bc">
-                <MenuItem Name="MenuItemStartTask" Height="34" Padding="8,4" Click="MenuItemStartTask_Click">
+                <MenuItem Name="MenuItemStartTask" Height="34" Padding="5,4" Click="MenuItemStartTask_Click">
                     <HeaderedItemsControl.Header>
                         <StackPanel Name="StartTaskGroupedLabel" Orientation="Horizontal">
                             <fa5:SvgAwesome Width="18" Height="18" Foreground="#FFFFFFFF" Icon="Solid_Play" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="5,0,0,0">Start</TextBlock>
+                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="2,0,0,0">Start</TextBlock>
                         </StackPanel>
                     </HeaderedItemsControl.Header>
                 </MenuItem>
-                <MenuItem Name="MenuTaskStartedPassiveLabel" Visibility="Collapsed" Padding="8,4" Background="#043b75" BorderBrush="#043b75" IsEnabled="False">
+                <MenuItem Name="MenuTaskStartedPassiveLabel" Visibility="Collapsed" Padding="5,4" Background="#043b75" BorderBrush="#043b75" IsEnabled="False">
                     <HeaderedItemsControl.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa5:SvgAwesome Width="18" Height="18" Foreground="#00c918" Icon="Solid_Circle" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="5,0,0,0">Started</TextBlock>
+                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="2,0,0,0">Started</TextBlock>
                         </StackPanel>
                     </HeaderedItemsControl.Header>
                 </MenuItem>
-                <MenuItem Name="MenuItemStopTask" Height="34" Padding="8,4" Click="MenuItemStopTask_Click">
+                <MenuItem Name="MenuItemStopTask" Height="34" Padding="5,4" Click="MenuItemStopTask_Click">
                     <HeaderedItemsControl.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa5:SvgAwesome Width="18" Height="18" Foreground="#FFFFFFFF" Icon="Solid_Stop" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="5,0,0,0">Stop</TextBlock>
+                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="2,0,0,0">Stop</TextBlock>
                         </StackPanel>
                     </HeaderedItemsControl.Header>
                 </MenuItem>
-                <MenuItem Name="MenuItemExportResults" Height="34" Padding="8,4" Click="MenuItemGrabbingResultsOverview_Click">
+                <MenuItem Name="MenuItemExportResults" Height="34" Padding="5,4" Click="MenuItemGrabbingResultsOverview_Click">
                     <HeaderedItemsControl.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa5:SvgAwesome Width="18" Height="18" Foreground="#FFFFFFFF" Icon="Regular_FileExcel" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="5,0,0,0">Export</TextBlock>
+                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="2,0,0,0">Export</TextBlock>
                         </StackPanel>
                     </HeaderedItemsControl.Header>
                 </MenuItem>
-                <MenuItem FontSize="18" Height="34" Padding="8,4">
+                <MenuItem Name="MenuItemSyncResults" Height="34" Padding="5,4" Click="MenuItemSyncResults_Click">
+                    <HeaderedItemsControl.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <fa5:SvgAwesome Width="18" Height="18" Foreground="#FFFFFFFF" Icon="Regular_FileCode" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="2,0,0,0">Sync</TextBlock>
+                        </StackPanel>
+                    </HeaderedItemsControl.Header>
+                </MenuItem>
+                <MenuItem FontSize="18" Height="34" Padding="5,4">
                     <HeaderedItemsControl.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa5:SvgAwesome Width="18" Height="18" Foreground="#FFFFFFFF" Icon="Solid_Magic" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="5,0,0,0">Actions</TextBlock>
+                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="2,0,0,0">Actions</TextBlock>
                         </StackPanel>
                     </HeaderedItemsControl.Header>
                     <MenuItem Name="MenuItemsLinksBuffer" Padding="5,5" Click="MenuItemsLinksBuffer_Click">
@@ -164,11 +172,11 @@
                         </HeaderedItemsControl.Header>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Name="MenuItemSettings" Height="34" Padding="6,4" Click="MenuItemSettings_Click">
+                <MenuItem Name="MenuItemSettings" Height="34" Padding="5,4" Click="MenuItemSettings_Click">
                     <HeaderedItemsControl.Header>
                         <StackPanel Orientation="Horizontal">
                             <fa5:SvgAwesome Width="18" Height="18" Foreground="#FFFFFFFF" Icon="Solid_Cog" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="5,0,0,0">Settings</TextBlock>
+                            <TextBlock Foreground="#FFFFFFFF" FontSize="16" Margin="2,0,0,0">Settings</TextBlock>
                         </StackPanel>
                     </HeaderedItemsControl.Header>
                 </MenuItem>

@@ -109,12 +109,12 @@ namespace DEClientInterface.UIControls
                 ScrapingNodeSelectorData.MarkAsUncorrectlyCompleted();
                 flag = true;
             }
-            if (dataGrabbingSelectorType == DataGrabbingSelectorType.CSS_Selector && text2.IndexOf(":") != -1 && CSSHelpers.CheckIsCSSPseudoSelectorUsed(text2))
-            {
-                MessageBox.Show($"CSS pseudo-selectors are not supported. Selector value = {text2}", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
-                ScrapingNodeSelectorData.MarkAsUncorrectlyCompleted();
-                flag = true;
-            }
+            // if (dataGrabbingSelectorType == DataGrabbingSelectorType.CSS_Selector && text2.IndexOf(":") != -1 && CSSHelpers.CheckIsCSSPseudoSelectorUsed(text2))
+            // {
+            //     MessageBox.Show($"CSS pseudo-selectors are not supported. Selector value = {text2}", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
+            //     ScrapingNodeSelectorData.MarkAsUncorrectlyCompleted();
+            //     flag = true;
+            // }
             /*else if (ParentWindowLink != null && !ParentWindowLink.CSSSelectorsTester.TestSelector(text2, dataGrabbingSelectorType))
 			{
 				MessageBox.Show($"Wrong or not-supported node selector. Selector value = {text2}", "Error", MessageBoxButton.OK, MessageBoxImage.Hand);
